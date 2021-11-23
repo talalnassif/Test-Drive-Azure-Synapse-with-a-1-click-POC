@@ -1,0 +1,21 @@
+{
+	"name": "Parquet_PERIOD_CONTROL_PERIODS",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "PERIOD_CONTROL_PERIODS.parquet",
+				"folderPath": "GTS_Live",
+				"container": "raw"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
