@@ -7,9 +7,25 @@
 			"metadata": "Workspace name",
 			"defaultValue": "eth6meqhqnmzpqsmpocws1"
 		},
+		"AzureBlobStorage1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage1'"
+		},
+		"GTS_Live_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'GTS_Live'"
+		},
 		"TripFaresSynapseAnalyticsLinkedService_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'TripFaresSynapseAnalyticsLinkedService'"
+		},
+		"USEEGSQLVN_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'USEEGSQLVN'"
+		},
+		"USEEGSQLVN_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'USEEGSQLVN'"
 		},
 		"HttpServerTripDataLinkedService_properties_typeProperties_url": {
 			"type": "string",
@@ -23,6 +39,10 @@
 			"type": "string",
 			"defaultValue": "@{concat('https://',linkedService().datalakeAccountName,'.dfs.core.windows.net')}"
 		},
+		"USEEGSQLVN_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "CRAIG.KENNY.ADMIN@ethosenergygroup.com"
+		},
 		"keyVaultLinkedservice_properties_typeProperties_baseUrl": {
 			"type": "string",
 			"defaultValue": "@{concat('https://',linkedService().keyVaultName,'.vault.azure.net/')}"
@@ -33,19 +53,64 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('workspaceName'), '/Pipeline 1')]",
+			"name": "[concat(parameters('workspaceName'), '/Copy from gts Live')]",
 			"type": "Microsoft.Synapse/workspaces/pipelines",
 			"apiVersion": "2019-06-01-preview",
 			"properties": {
 				"activities": [
 					{
-						"name": "Wait1",
-						"type": "Wait",
+						"name": "Copy data1",
+						"type": "Copy",
 						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
 						"userProperties": [],
 						"typeProperties": {
-							"waitTimeInSeconds": 1
-						}
+							"source": {
+								"type": "OracleSource",
+								"partitionOption": "None",
+								"queryTimeout": "02:00:00"
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobStorageWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "PERIOD_CONTROL_PERIODS",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "CSV_PERIOD_CONTROL_PERIODS",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
 					}
 				],
 				"policy": {
@@ -54,7 +119,10 @@
 				},
 				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/datasets/PERIOD_CONTROL_PERIODS')]",
+				"[concat(variables('workspaceId'), '/datasets/CSV_PERIOD_CONTROL_PERIODS')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('workspaceName'), '/TripFaresDataPipeline')]",
@@ -694,6 +762,56 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('workspaceName'), '/CSV_PERIOD_CONTROL_PERIODS')]",
+			"type": "Microsoft.Synapse/workspaces/datasets",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "PERIOD_CONTROL_PERIODS.csv",
+						"folderPath": "GTS_Live",
+						"container": "raw"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/linkedServices/AzureBlobStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/PERIOD_CONTROL_PERIODS')]",
+			"type": "Microsoft.Synapse/workspaces/datasets",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "GTS_Live",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "WGMS",
+					"table": "PERIOD_CONTROL_PERIODS"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/linkedServices/GTS_Live')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('workspaceName'), '/azureSynapseAnalyticsSchema')]",
 			"type": "Microsoft.Synapse/workspaces/datasets",
 			"apiVersion": "2019-06-01-preview",
@@ -1069,6 +1187,44 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('workspaceName'), '/AzureBlobStorage1')]",
+			"type": "Microsoft.Synapse/workspaces/linkedServices",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureBlobStorage1_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "AutoResolveIntegrationRuntime",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/GTS_Live')]",
+			"type": "Microsoft.Synapse/workspaces/linkedServices",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"annotations": [],
+				"type": "Oracle",
+				"typeProperties": {
+					"connectionString": "[parameters('GTS_Live_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "SelfHostedIntegrationRunTime-USDatacentre",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/integrationRuntimes/SelfHostedIntegrationRunTime-USDatacentre')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('workspaceName'), '/HttpServerTripDataLinkedService')]",
 			"type": "Microsoft.Synapse/workspaces/linkedServices",
 			"apiVersion": "2019-06-01-preview",
@@ -1215,6 +1371,30 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('workspaceName'), '/USEEGSQLVN')]",
+			"type": "Microsoft.Synapse/workspaces/linkedServices",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"annotations": [],
+				"type": "SqlServer",
+				"typeProperties": {
+					"connectionString": "[parameters('USEEGSQLVN_connectionString')]",
+					"userName": "[parameters('USEEGSQLVN_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('USEEGSQLVN_password')]"
+					}
+				},
+				"connectVia": {
+					"referenceName": "SelfHostedIntegrationRunTime-USDatacentre",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/integrationRuntimes/SelfHostedIntegrationRunTime-USDatacentre')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('workspaceName'), '/keyVaultLinkedservice')]",
 			"type": "Microsoft.Synapse/workspaces/linkedServices",
 			"apiVersion": "2019-06-01-preview",
@@ -1244,7 +1424,8 @@
 						"dataFlowProperties": {
 							"computeType": "General",
 							"coreCount": 8,
-							"timeToLive": 0
+							"timeToLive": 0,
+							"cleanup": true
 						}
 					}
 				},
@@ -1256,6 +1437,16 @@
 			"dependsOn": [
 				"[concat(variables('workspaceId'), '/managedVirtualNetworks/default')]"
 			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SelfHostedIntegrationRunTime-USDatacentre')]",
+			"type": "Microsoft.Synapse/workspaces/integrationRuntimes",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"type": "SelfHosted",
+				"typeProperties": {}
+			},
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('workspaceName'), '/tripFaresDataTransformations')]",
@@ -1672,6 +1863,78 @@
 			"apiVersion": "2019-06-01-preview",
 			"properties": {},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/Copy from gts Live_copy1')]",
+			"type": "Microsoft.Synapse/workspaces/pipelines",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "OracleSource",
+								"partitionOption": "None",
+								"queryTimeout": "02:00:00"
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobStorageWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "PERIOD_CONTROL_PERIODS",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "CSV_PERIOD_CONTROL_PERIODS",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/datasets/PERIOD_CONTROL_PERIODS')]",
+				"[concat(variables('workspaceId'), '/datasets/CSV_PERIOD_CONTROL_PERIODS')]"
+			]
 		}
 	]
 }

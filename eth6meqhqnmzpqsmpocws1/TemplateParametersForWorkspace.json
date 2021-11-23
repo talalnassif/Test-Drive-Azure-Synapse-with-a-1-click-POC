@@ -5,7 +5,19 @@
 		"workspaceName": {
 			"value": "eth6meqhqnmzpqsmpocws1"
 		},
+		"AzureBlobStorage1_connectionString": {
+			"value": ""
+		},
+		"GTS_Live_connectionString": {
+			"value": ""
+		},
 		"TripFaresSynapseAnalyticsLinkedService_connectionString": {
+			"value": ""
+		},
+		"USEEGSQLVN_connectionString": {
+			"value": ""
+		},
+		"USEEGSQLVN_password": {
 			"value": ""
 		},
 		"HttpServerTripDataLinkedService_properties_typeProperties_url": {
@@ -16,6 +28,9 @@
 		},
 		"TripFaresDataLakeStorageLinkedService_properties_typeProperties_url": {
 			"value": "@{concat('https://',linkedService().datalakeAccountName,'.dfs.core.windows.net')}"
+		},
+		"USEEGSQLVN_properties_typeProperties_userName": {
+			"value": "CRAIG.KENNY.ADMIN@ethosenergygroup.com"
 		},
 		"keyVaultLinkedservice_properties_typeProperties_baseUrl": {
 			"value": "@{concat('https://',linkedService().keyVaultName,'.vault.azure.net/')}"
