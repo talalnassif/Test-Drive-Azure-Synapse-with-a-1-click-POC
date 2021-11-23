@@ -1,0 +1,6 @@
+{
+	"name": "SelfHostedIntegrationRunTime-USDatacentre",
+	"properties": {
+		"type": "SelfHosted"
+	}
+}
