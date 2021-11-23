@@ -1,0 +1,16 @@
+{
+	"name": "PERIOD_CONTROL_PERIODS",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "GTS_Live",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "WGMS",
+			"table": "PERIOD_CONTROL_PERIODS"
+		}
+	}
+}
