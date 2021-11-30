@@ -1,0 +1,69 @@
+{
+	"name": "Oracle Incremental Load",
+	"properties": {
+		"activities": [
+			{
+				"name": "Fake_Incremental_ONEDATA_VIEW",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "OracleSource",
+						"oracleReaderQuery": "select * from ONEDATA_VIEW where date_last_modified > sysdate-1",
+						"partitionOption": "None",
+						"queryTimeout": "02:00:00"
+					},
+					"sink": {
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "ParquetWriteSettings"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "MetadataDrivenCopyTask_Oracle_pcr_SourceDS",
+						"type": "DatasetReference",
+						"parameters": {
+							"cw_schema": "WGMS",
+							"cw_table": "ONEDATA_VIEW"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "MetadataDrivenCopyTask_Oracle_pcr_DestinationDS",
+						"type": "DatasetReference",
+						"parameters": {
+							"cw_compressionCodec": "snappy",
+							"cw_fileName": "ONEDATA_VIEW_incremental.parquet",
+							"cw_folderPath": "iFlight/Incremental",
+							"cw_fileSystem": "raw"
+						}
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}
