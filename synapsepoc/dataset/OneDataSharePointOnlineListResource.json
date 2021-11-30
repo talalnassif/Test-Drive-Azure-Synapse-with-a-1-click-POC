@@ -1,5 +1,5 @@
 {
-	"name": "SharePointOnlineListResource1",
+	"name": "OneDataSharePointOnlineListResource",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "OneDataTeamSite",
