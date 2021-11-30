@@ -1,0 +1,52 @@
+{
+	"name": "Incremental Navision copy pipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "GetChangeCount",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": "DECLARE @from_lsn binary(10), @to_lsn binary(10);\nSET @from_lsn =sys.fn_cdc_get_min_lsn('dbo_G215 OM West$G_L Entry');\nSET @to_lsn = sys.fn_cdc_map_time_to_lsn('largest less than or equal', GETDATE());\nSELECT count(1) changecount FROM cdc.[fn_cdc_get_all_changes_dbo_G215 OM West$G_L Entry](@from_lsn, @to_lsn, 'all')",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "SQL_SERVER_CDC",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "If Condition1",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "GetChangeCount",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@greater(int(activity('GetChangeCount').output.firstRow.changecount),0)",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"annotations": []
+	}
+}
