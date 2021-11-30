@@ -24,7 +24,7 @@
 					"headers": {
 						"Content-Type": "application/x-www-form-urlencoded"
 					},
-					"body": "grant_type=client_credentials&client_id=b662fe86-3a69-4bb6-973b-0286013771ce@a1677f4d-5acf-44d4-a9e9-fe9069bbb089&client_secret=5d02ccfb-360b-4c43-a396-6fabd824abe6&resource=00000003-0000-0ff1-ce00-000000000000/ethosenergygroup.sharepoint.com@a1677f4d-5acf-44d4-a9e9-fe9069bbb089"
+					"body": "grant_type=client_credentials&client_id=b662fe86-3a69-4bb6-973b-0286013771ce@a1677f4d-5acf-44d4-a9e9-fe9069bbb089&client_secret=BW-7Q~VOgG5zAiYqsMJOXLNdQTL2RF2jaoNZk&resource=00000003-0000-0ff1-ce00-000000000000/ethosenergygroup.sharepoint.com@a1677f4d-5acf-44d4-a9e9-fe9069bbb089"
 				}
 			}
 		],
