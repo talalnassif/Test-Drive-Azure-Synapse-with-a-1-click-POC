@@ -10,6 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
+				"fileName": "Lookups for POC.xlsx",
 				"folderPath": "Lookups",
 				"fileSystem": "raw"
 			}
