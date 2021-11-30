@@ -58,6 +58,14 @@
 		"keyVaultLinkedservice_properties_typeProperties_baseUrl": {
 			"type": "string",
 			"defaultValue": "@{concat('https://',linkedService().keyVaultName,'.vault.azure.net/')}"
+		},
+		"TumblingTrigger_1h_properties_pipeline_parameters_triggerStartTime": {
+			"type": "string",
+			"defaultValue": "@formatDateTime(trigger().outputs.windowStartTime,'yyyy-MM-dd HH:mm:ss.fff')"
+		},
+		"TumblingTrigger_1h_properties_pipeline_parameters_triggerEndTime": {
+			"type": "string",
+			"defaultValue": "@formatDateTime(trigger().outputs.windowEndTime,'yyyy-MM-dd HH:mm:ss.fff')"
 		}
 	},
 	"variables": {
@@ -4698,6 +4706,40 @@
 			"dependsOn": [
 				"[concat(variables('workspaceId'), '/datasets/SQL_SERVER_CDC')]",
 				"[concat(variables('workspaceId'), '/datasets/G215_OM_WestG_L_Entry_Incremental')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/TumblingTrigger_1h')]",
+			"type": "Microsoft.Synapse/workspaces/triggers",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipeline": {
+					"pipelineReference": {
+						"referenceName": "Incremental Navision copy pipeline",
+						"type": "PipelineReference"
+					},
+					"parameters": {
+						"triggerStartTime": "[parameters('TumblingTrigger_1h_properties_pipeline_parameters_triggerStartTime')]",
+						"triggerEndTime": "[parameters('TumblingTrigger_1h_properties_pipeline_parameters_triggerEndTime')]"
+					}
+				},
+				"type": "TumblingWindowTrigger",
+				"typeProperties": {
+					"frequency": "Hour",
+					"interval": 1,
+					"startTime": "2021-11-30T19:00:00Z",
+					"delay": "00:00:00",
+					"maxConcurrency": 50,
+					"retryPolicy": {
+						"intervalInSeconds": 30
+					},
+					"dependsOn": []
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/pipelines/Incremental Navision copy pipeline')]"
 			]
 		}
 	]
