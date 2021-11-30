@@ -1,0 +1,439 @@
+{
+	"name": "SQL_SERVER_CDC",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "USEEGSQLVN",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "__$start_lsn",
+				"type": "binary"
+			},
+			{
+				"name": "__$end_lsn",
+				"type": "binary"
+			},
+			{
+				"name": "__$seqval",
+				"type": "binary"
+			},
+			{
+				"name": "__$operation",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "__$update_mask",
+				"type": "varbinary"
+			},
+			{
+				"name": "timestamp",
+				"type": "binary"
+			},
+			{
+				"name": "Entry No_",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "G_L Account No_",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Posting Date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Document Type",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Document No_",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Description",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Bal_ Account No_",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Amount",
+				"type": "decimal",
+				"precision": 38,
+				"scale": 20
+			},
+			{
+				"name": "Global Dimension 1 Code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Global Dimension 2 Code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "User ID",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Source Code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "System-Created Entry",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "Prior-Year Entry",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "Job No_",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Quantity",
+				"type": "decimal",
+				"precision": 38,
+				"scale": 20
+			},
+			{
+				"name": "VAT Amount",
+				"type": "decimal",
+				"precision": 38,
+				"scale": 20
+			},
+			{
+				"name": "Business Unit Code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Journal Batch Name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Reason Code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Gen_ Posting Type",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Gen_ Bus_ Posting Group",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Gen_ Prod_ Posting Group",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Bal_ Account Type",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Transaction No_",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Debit Amount",
+				"type": "decimal",
+				"precision": 38,
+				"scale": 20
+			},
+			{
+				"name": "Credit Amount",
+				"type": "decimal",
+				"precision": 38,
+				"scale": 20
+			},
+			{
+				"name": "Document Date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "External Document No_",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Source Type",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Source No_",
+				"type": "nvarchar"
+			},
+			{
+				"name": "No_ Series",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Tax Area Code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Tax Liable",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "Tax Group Code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Use Tax",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "VAT Bus_ Posting Group",
+				"type": "nvarchar"
+			},
+			{
+				"name": "VAT Prod_ Posting Group",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Additional-Currency Amount",
+				"type": "decimal",
+				"precision": 38,
+				"scale": 20
+			},
+			{
+				"name": "Add_-Currency Debit Amount",
+				"type": "decimal",
+				"precision": 38,
+				"scale": 20
+			},
+			{
+				"name": "Add_-Currency Credit Amount",
+				"type": "decimal",
+				"precision": 38,
+				"scale": 20
+			},
+			{
+				"name": "Close Income Statement Dim_ ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "IC Partner Code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Reversed",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "Reversed by Entry No_",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Reversed Entry No_",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Dimension Set ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Prod_ Order No_",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FA Entry Type",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "FA Entry No_",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "STE Transaction ID",
+				"type": "nvarchar"
+			},
+			{
+				"name": "GST_HST",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Order No_",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Document Line No_",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Check No_",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Voucher Description",
+				"type": "nvarchar"
+			},
+			{
+				"name": "VAT To Ref Contact Type",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "VAT To Ref Contact Code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Before Document No_",
+				"type": "nvarchar"
+			},
+			{
+				"name": "VAT-to Direct",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Document No_ Before Post",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Unrealized VAT Entry No_",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Document No_ Before Posted",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Voucher Remark 1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Voucher Remark 2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Voucher Remark 3",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Voucher Remark 4",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Voucher Remark 5",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Voucher Remark 6",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Voucher Remark 7",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Voucher Remark 8",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Voucher Remark 9",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Voucher Remark 10",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Pay-to_Receive from Direct",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Payment Term Code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Due Date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Currency Code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Currency Factor",
+				"type": "decimal",
+				"precision": 38,
+				"scale": 20
+			},
+			{
+				"name": "Job task no_",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Is Merge Source Type",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "Is Merge Bal Account Type",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "Change From Source Name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Merged From Bal Account",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Merged from Source Account",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Is Merge GLAccNo",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "Merge from GLAccNo",
+				"type": "nvarchar"
+			},
+			{
+				"name": "__$command_id",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "cdc",
+			"table": "dbo_G215 OM West$G_L Entry_CT"
+		}
+	}
+}
