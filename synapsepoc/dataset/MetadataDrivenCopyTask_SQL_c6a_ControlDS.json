@@ -1,0 +1,19 @@
+{
+	"name": "MetadataDrivenCopyTask_SQL_c6a_ControlDS",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSQL",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "MetadataDrivenCopyTask_SQL_c6a_20211130"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "MainControlTable_SQL"
+		}
+	}
+}
