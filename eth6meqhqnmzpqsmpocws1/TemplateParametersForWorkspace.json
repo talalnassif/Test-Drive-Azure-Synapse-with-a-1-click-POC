@@ -17,6 +17,9 @@
 		"GTS_Live_connectionString": {
 			"value": ""
 		},
+		"OneDataTeamSite_servicePrincipalKey": {
+			"value": ""
+		},
 		"TripFaresSynapseAnalyticsLinkedService_connectionString": {
 			"value": ""
 		},
@@ -29,11 +32,17 @@
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"value": "https://eth6meqhqnmzpqsmpoc.dfs.core.windows.net/"
 		},
+		"HttpServerOneDataSharepoint_properties_typeProperties_url": {
+			"value": "https://ethosenergygroup.sharepoint.com/sites/OneData/_api/web/GetFileByServerRelativeUrl(%27/sites/OneData/Shared%20Documents/General/Microsoft%20POC/Lookups%20for%20MS%20POC.xlsx%27)/$value"
+		},
 		"HttpServerTripDataLinkedService_properties_typeProperties_url": {
 			"value": "https://raw.githubusercontent.com/Azure/Test-Drive-Azure-Synapse-with-a-1-click-POC/main/tripDataAndFaresCSV/trip-data.csv"
 		},
 		"HttpServerTripFareDataLinkedService_properties_typeProperties_url": {
 			"value": "https://raw.githubusercontent.com/Azure/Test-Drive-Azure-Synapse-with-a-1-click-POC/main/tripDataAndFaresCSV/fares-data.csv"
+		},
+		"OneDataTeamSite_properties_typeProperties_servicePrincipalId": {
+			"value": "b662fe86-3a69-4bb6-973b-0286013771ce"
 		},
 		"TripFaresDataLakeStorageLinkedService_properties_typeProperties_url": {
 			"value": "@{concat('https://',linkedService().datalakeAccountName,'.dfs.core.windows.net')}"
