@@ -1,0 +1,40 @@
+{
+	"name": "Oracle History Load to Synapse",
+	"properties": {
+		"activities": [
+			{
+				"name": "Data flow1",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "1.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "OracleHistory",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"source1": {
+								"cw_compressionCodec": "snappy",
+								"cw_fileName": "ONEDATA_VIEW.parquet",
+								"cw_folderPath": "iFlight/Full",
+								"cw_fileSystem": "raw"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			}
+		],
+		"annotations": []
+	}
+}
