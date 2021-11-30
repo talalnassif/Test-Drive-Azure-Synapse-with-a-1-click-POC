@@ -1,0 +1,19 @@
+{
+	"name": "MetadataDrivenCopyTask_Oracle_pcr_ControlDS",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSQL",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "MetadataDrivenCopyTask_Oracle_pcr_20211130"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "MainControlTable_oracle"
+		}
+	}
+}
