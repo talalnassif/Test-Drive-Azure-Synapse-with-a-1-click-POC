@@ -1,0 +1,16 @@
+{
+	"name": "HttpServerOneDataSharepoint",
+	"properties": {
+		"annotations": [],
+		"type": "HttpServer",
+		"typeProperties": {
+			"url": "https://ethosenergygroup.sharepoint.com/sites/OneData/Shared%20Documents/General/Microsoft%20POC/Lookups%20for%20MS%20POC.xlsx",
+			"enableServerCertificateValidation": true,
+			"authenticationType": "Anonymous"
+		},
+		"connectVia": {
+			"referenceName": "AutoResolveIntegrationRuntime",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}
