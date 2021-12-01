@@ -1,6 +1,9 @@
 {
 	"name": "OracleIncremental",
 	"properties": {
+		"folder": {
+			"name": "Oracle"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
