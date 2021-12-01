@@ -1,0 +1,52 @@
+{
+	"name": "Oracle Incremental Load to Synapse",
+	"properties": {
+		"activities": [
+			{
+				"name": "DataFlowOracleIncremental",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "1.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "OracleIncremental",
+						"type": "DataFlowReference",
+						"parameters": {
+							"cols": [
+								"ID"
+							]
+						},
+						"datasetParameters": {
+							"source1": {
+								"cw_compressionCodec": "snappy",
+								"cw_fileName": "ONEDATA_VIEW_incremental.parquet",
+								"cw_folderPath": "iFlight/Incremental",
+								"cw_fileSystem": "raw"
+							}
+						}
+					},
+					"staging": {
+						"linkedService": {
+							"referenceName": "AzureDataLakeStorage1",
+							"type": "LinkedServiceReference"
+						},
+						"folderPath": "raw"
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			}
+		],
+		"annotations": []
+	}
+}

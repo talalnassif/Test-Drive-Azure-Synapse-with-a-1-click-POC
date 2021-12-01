@@ -1,5 +1,5 @@
 {
-	"name": "Dataflow1",
+	"name": "OracleIncremental",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
