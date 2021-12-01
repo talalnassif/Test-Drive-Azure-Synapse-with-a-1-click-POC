@@ -5717,6 +5717,305 @@
 			"dependsOn": [
 				"[concat(variables('workspaceId'), '/pipelines/Incremental Navision copy pipeline - R858 BV Netherlands')]"
 			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SQLDelimitedText')]",
+			"type": "Microsoft.Synapse/workspaces/datasets",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"folderpath": {
+						"type": "string"
+					},
+					"filepath": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": {
+							"value": "@dataset().filepath",
+							"type": "Expression"
+						},
+						"folderPath": {
+							"value": "@dataset().folderpath",
+							"type": "Expression"
+						},
+						"fileSystem": "raw"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/linkedServices/AzureDataLakeStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/Dataset')]",
+			"type": "Microsoft.Synapse/workspaces/datasets",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "G215 OM West$G_L Entry.csv",
+						"folderPath": "Navision/Full",
+						"fileSystem": "raw"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/linkedServices/AzureDataLakeStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SQL Navision - G215 OM West - Working')]",
+			"type": "Microsoft.Synapse/workspaces/dataflows",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"folder": {
+					"name": "SQL"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Dataset",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"linkedService": {
+								"referenceName": "AzureSynapseAnalytics1",
+								"type": "LinkedServiceReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "DerivedColumn1"
+						}
+					],
+					"script": "source(output(\n\t\ttimestamp as string,\n\t\t{Entry No_} as short,\n\t\t{G_L Account No_} as integer,\n\t\t{Posting Date} as string,\n\t\t{Document Type} as short,\n\t\t{Document No_} as string,\n\t\tDescription as string,\n\t\t{Bal_ Account No_} as string,\n\t\tAmount as double,\n\t\t{Global Dimension 1 Code} as short,\n\t\t{Global Dimension 2 Code} as string,\n\t\t{User ID} as string,\n\t\t{Source Code} as string,\n\t\t{System-Created Entry} as boolean,\n\t\t{Prior-Year Entry} as boolean,\n\t\t{Job No_} as string,\n\t\tQuantity as double,\n\t\t{VAT Amount} as double,\n\t\t{Business Unit Code} as string,\n\t\t{Journal Batch Name} as string,\n\t\t{Reason Code} as string,\n\t\t{Gen_ Posting Type} as short,\n\t\t{Gen_ Bus_ Posting Group} as string,\n\t\t{Gen_ Prod_ Posting Group} as string,\n\t\t{Bal_ Account Type} as short,\n\t\t{Transaction No_} as short,\n\t\t{Debit Amount} as double,\n\t\t{Credit Amount} as double,\n\t\t{Document Date} as string,\n\t\t{External Document No_} as string,\n\t\t{Source Type} as short,\n\t\t{Source No_} as string,\n\t\t{No_ Series} as string,\n\t\t{Tax Area Code} as string,\n\t\t{Tax Liable} as boolean,\n\t\t{Tax Group Code} as string,\n\t\t{Use Tax} as boolean,\n\t\t{VAT Bus_ Posting Group} as string,\n\t\t{VAT Prod_ Posting Group} as string,\n\t\t{Additional-Currency Amount} as double,\n\t\t{Add_-Currency Debit Amount} as double,\n\t\t{Add_-Currency Credit Amount} as double,\n\t\t{Close Income Statement Dim_ ID} as boolean,\n\t\t{IC Partner Code} as string,\n\t\tReversed as boolean,\n\t\t{Reversed by Entry No_} as short,\n\t\t{Reversed Entry No_} as short,\n\t\t{Dimension Set ID} as short,\n\t\t{Prod_ Order No_} as string,\n\t\t{FA Entry Type} as boolean,\n\t\t{FA Entry No_} as boolean,\n\t\t{STE Transaction ID} as string,\n\t\tGST_HST as boolean,\n\t\t{Order No_} as string,\n\t\t{Document Line No_} as boolean,\n\t\t{Check No_} as string,\n\t\t{Voucher Description} as string,\n\t\t{VAT To Ref Contact Type} as boolean,\n\t\t{VAT To Ref Contact Code} as string,\n\t\t{Before Document No_} as string,\n\t\t{VAT-to Direct} as string,\n\t\t{Document No_ Before Post} as string,\n\t\t{Unrealized VAT Entry No_} as boolean,\n\t\t{Document No_ Before Posted} as string,\n\t\t{Voucher Remark 1} as string,\n\t\t{Voucher Remark 2} as string,\n\t\t{Voucher Remark 3} as string,\n\t\t{Voucher Remark 4} as string,\n\t\t{Voucher Remark 5} as string,\n\t\t{Voucher Remark 6} as string,\n\t\t{Voucher Remark 7} as string,\n\t\t{Voucher Remark 8} as string,\n\t\t{Voucher Remark 9} as string,\n\t\t{Voucher Remark 10} as string,\n\t\t{Pay-to_Receive from Direct} as string,\n\t\t{Payment Term Code} as string,\n\t\t{Due Date} as string,\n\t\t{Currency Code} as string,\n\t\t{Currency Factor} as double,\n\t\t{Job task no_} as string,\n\t\t{Is Merge Source Type} as boolean,\n\t\t{Is Merge Bal Account Type} as boolean,\n\t\t{Change From Source Name} as string,\n\t\t{Merged From Bal Account} as string,\n\t\t{Merged from Source Account} as string,\n\t\t{Is Merge GLAccNo} as boolean,\n\t\t{Merge from GLAccNo} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source1\nsource1 derive(last_update_tmstp = currentUTC(),\n\t\tsource_system = 'G215 OM West') ~> DerivedColumn1\nDerivedColumn1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'table',\n\tstore: 'synapseanalytics',\n\tschemaName: 'dbo',\n\ttableName: 'G215OMWest',\n\tinsertable: true,\n\tupdateable: false,\n\tdeletable: false,\n\tupsertable: false,\n\trecreate: true,\n\tstaged: true,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/datasets/Dataset')]",
+				"[concat(variables('workspaceId'), '/linkedServices/AzureSynapseAnalytics1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SQL Navision - Pipeline full load')]",
+			"type": "Microsoft.Synapse/workspaces/pipelines",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"activities": [
+					{
+						"name": "SQL Navision - Pipeline full data load",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "1.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "SQL Navision - G215 OM West - Working",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source1": {},
+									"sink1": {}
+								}
+							},
+							"staging": {
+								"linkedService": {
+									"referenceName": "AzureDataLakeStorage1",
+									"type": "LinkedServiceReference"
+								},
+								"folderPath": "raw"
+							},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "Navision - Pipelines"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]",
+				"[concat(variables('workspaceId'), '/dataflows/SQL Navision - G215 OM West - Working')]",
+				"[concat(variables('workspaceId'), '/linkedServices/AzureDataLakeStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SQL Navision - G215 OM West - incremental')]",
+			"type": "Microsoft.Synapse/workspaces/dataflows",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"folder": {
+					"name": "SQL"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"linkedService": {
+								"referenceName": "AzureDataLakeStorage1",
+								"type": "LinkedServiceReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"linkedService": {
+								"referenceName": "AzureSynapseAnalytics1",
+								"type": "LinkedServiceReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "Select1"
+						},
+						{
+							"name": "DerivedColumn1"
+						},
+						{
+							"name": "AlterRow1"
+						}
+					],
+					"script": "parameters{\n\tcols as string[] ([\"Entry No_\"])\n}\nsource(output(\n\t\t{__$start_lsn} as string,\n\t\t{__$seqval} as string,\n\t\t{__$operation} as short,\n\t\t{__$update_mask} as string,\n\t\ttimestamp as string,\n\t\t{Entry No_} as integer,\n\t\t{G_L Account No_} as integer,\n\t\t{Posting Date} as string,\n\t\t{Document Type} as integer,\n\t\t{Document No_} as string,\n\t\tDescription as string,\n\t\t{Bal_ Account No_} as integer,\n\t\tAmount as double,\n\t\t{Global Dimension 1 Code} as integer,\n\t\t{Global Dimension 2 Code} as string,\n\t\t{User ID} as string,\n\t\t{Source Code} as string,\n\t\t{System-Created Entry} as integer,\n\t\t{Prior-Year Entry} as integer,\n\t\t{Job No_} as integer,\n\t\tQuantity as double,\n\t\t{VAT Amount} as double,\n\t\t{Business Unit Code} as string,\n\t\t{Journal Batch Name} as string,\n\t\t{Reason Code} as string,\n\t\t{Gen_ Posting Type} as integer,\n\t\t{Gen_ Bus_ Posting Group} as string,\n\t\t{Gen_ Prod_ Posting Group} as string,\n\t\t{Bal_ Account Type} as integer,\n\t\t{Transaction No_} as integer,\n\t\t{Debit Amount} as double,\n\t\t{Credit Amount} as double,\n\t\t{Document Date} as string,\n\t\t{External Document No_} as string,\n\t\t{Source Type} as integer,\n\t\t{Source No_} as string,\n\t\t{No_ Series} as string,\n\t\t{Tax Area Code} as string,\n\t\t{Tax Liable} as integer,\n\t\t{Tax Group Code} as string,\n\t\t{Use Tax} as integer,\n\t\t{VAT Bus_ Posting Group} as string,\n\t\t{VAT Prod_ Posting Group} as string,\n\t\t{Additional-Currency Amount} as double,\n\t\t{Add_-Currency Debit Amount} as double,\n\t\t{Add_-Currency Credit Amount} as double,\n\t\t{Close Income Statement Dim_ ID} as integer,\n\t\t{IC Partner Code} as string,\n\t\tReversed as integer,\n\t\t{Reversed by Entry No_} as integer,\n\t\t{Reversed Entry No_} as integer,\n\t\t{Dimension Set ID} as short,\n\t\t{Prod_ Order No_} as string,\n\t\t{FA Entry Type} as integer,\n\t\t{FA Entry No_} as integer,\n\t\t{STE Transaction ID} as string,\n\t\tGST_HST as integer,\n\t\t{Order No_} as string,\n\t\t{Document Line No_} as integer,\n\t\t{Check No_} as string,\n\t\t{Voucher Description} as string,\n\t\t{VAT To Ref Contact Type} as integer,\n\t\t{VAT To Ref Contact Code} as string,\n\t\t{Before Document No_} as string,\n\t\t{VAT-to Direct} as string,\n\t\t{Document No_ Before Post} as string,\n\t\t{Unrealized VAT Entry No_} as integer,\n\t\t{Document No_ Before Posted} as string,\n\t\t{Voucher Remark 1} as string,\n\t\t{Voucher Remark 2} as string,\n\t\t{Voucher Remark 3} as string,\n\t\t{Voucher Remark 4} as string,\n\t\t{Voucher Remark 5} as string,\n\t\t{Voucher Remark 6} as string,\n\t\t{Voucher Remark 7} as string,\n\t\t{Voucher Remark 8} as string,\n\t\t{Voucher Remark 9} as string,\n\t\t{Voucher Remark 10} as string,\n\t\t{Pay-to_Receive from Direct} as string,\n\t\t{Payment Term Code} as string,\n\t\t{Due Date} as string,\n\t\t{Currency Code} as string,\n\t\t{Currency Factor} as integer,\n\t\t{Job task no_} as string,\n\t\t{Is Merge Source Type} as integer,\n\t\t{Is Merge Bal Account Type} as integer,\n\t\t{Change From Source Name} as string,\n\t\t{Merged From Bal Account} as string,\n\t\t{Merged from Source Account} as string,\n\t\t{Is Merge GLAccNo} as integer,\n\t\t{Merge from GLAccNo} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tformat: 'delimited',\n\tfileSystem: 'raw',\n\tfolderPath: 'Navision/Incremental/G215 OM West$G_L Entry/2021/11/30',\n\tfileName: '20211130120000000.csv',\n\tcolumnDelimiter: ',',\n\tescapeChar: '\\\\',\n\tquoteChar: '\\\"',\n\tcolumnNamesAsHeader: true) ~> source1\nsource1 select(mapColumn(\n\t\ttimestamp,\n\t\t{Entry No_},\n\t\t{G_L Account No_},\n\t\t{Posting Date},\n\t\t{Document Type},\n\t\t{Document No_},\n\t\tDescription,\n\t\t{Bal_ Account No_},\n\t\tAmount,\n\t\t{Global Dimension 1 Code},\n\t\t{Global Dimension 2 Code},\n\t\t{User ID},\n\t\t{Source Code},\n\t\t{System-Created Entry},\n\t\t{Prior-Year Entry},\n\t\t{Job No_},\n\t\tQuantity,\n\t\t{VAT Amount},\n\t\t{Business Unit Code},\n\t\t{Journal Batch Name},\n\t\t{Reason Code},\n\t\t{Gen_ Posting Type},\n\t\t{Gen_ Bus_ Posting Group},\n\t\t{Gen_ Prod_ Posting Group},\n\t\t{Bal_ Account Type},\n\t\t{Transaction No_},\n\t\t{Debit Amount},\n\t\t{Credit Amount},\n\t\t{Document Date},\n\t\t{External Document No_},\n\t\t{Source Type},\n\t\t{Source No_},\n\t\t{No_ Series},\n\t\t{Tax Area Code},\n\t\t{Tax Liable},\n\t\t{Tax Group Code},\n\t\t{Use Tax},\n\t\t{VAT Bus_ Posting Group},\n\t\t{VAT Prod_ Posting Group},\n\t\t{Additional-Currency Amount},\n\t\t{Add_-Currency Debit Amount},\n\t\t{Add_-Currency Credit Amount},\n\t\t{Close Income Statement Dim_ ID},\n\t\t{IC Partner Code},\n\t\tReversed,\n\t\t{Reversed by Entry No_},\n\t\t{Reversed Entry No_},\n\t\t{Dimension Set ID},\n\t\t{Prod_ Order No_},\n\t\t{FA Entry Type},\n\t\t{FA Entry No_},\n\t\t{STE Transaction ID},\n\t\tGST_HST,\n\t\t{Order No_},\n\t\t{Document Line No_},\n\t\t{Check No_},\n\t\t{Voucher Description},\n\t\t{VAT To Ref Contact Type},\n\t\t{VAT To Ref Contact Code},\n\t\t{Before Document No_},\n\t\t{VAT-to Direct},\n\t\t{Document No_ Before Post},\n\t\t{Unrealized VAT Entry No_},\n\t\t{Document No_ Before Posted},\n\t\t{Voucher Remark 1},\n\t\t{Voucher Remark 2},\n\t\t{Voucher Remark 3},\n\t\t{Voucher Remark 4},\n\t\t{Voucher Remark 5},\n\t\t{Voucher Remark 6},\n\t\t{Voucher Remark 7},\n\t\t{Voucher Remark 8},\n\t\t{Voucher Remark 9},\n\t\t{Voucher Remark 10},\n\t\t{Pay-to_Receive from Direct},\n\t\t{Payment Term Code},\n\t\t{Due Date},\n\t\t{Currency Code},\n\t\t{Currency Factor},\n\t\t{Job task no_},\n\t\t{Is Merge Source Type},\n\t\t{Is Merge Bal Account Type},\n\t\t{Change From Source Name},\n\t\t{Merged From Bal Account},\n\t\t{Merged from Source Account},\n\t\t{Is Merge GLAccNo},\n\t\t{Merge from GLAccNo}\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nSelect1 derive(last_update_tmstp = currentUTC(),\n\t\tsource_system = 'G215 OM West') ~> DerivedColumn1\nDerivedColumn1 alterRow(upsertIf(true())) ~> AlterRow1\nAlterRow1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinput(\n\t\ttimestamp as string,\n\t\t{Entry No_} as short,\n\t\t{G_L Account No_} as integer,\n\t\t{Posting Date} as string,\n\t\t{Document Type} as short,\n\t\t{Document No_} as string,\n\t\tDescription as string,\n\t\t{Bal_ Account No_} as string,\n\t\tAmount as double,\n\t\t{Global Dimension 1 Code} as short,\n\t\t{Global Dimension 2 Code} as string,\n\t\t{User ID} as string,\n\t\t{Source Code} as string,\n\t\t{System-Created Entry} as boolean,\n\t\t{Prior-Year Entry} as boolean,\n\t\t{Job No_} as string,\n\t\tQuantity as double,\n\t\t{VAT Amount} as double,\n\t\t{Business Unit Code} as string,\n\t\t{Journal Batch Name} as string,\n\t\t{Reason Code} as string,\n\t\t{Gen_ Posting Type} as short,\n\t\t{Gen_ Bus_ Posting Group} as string,\n\t\t{Gen_ Prod_ Posting Group} as string,\n\t\t{Bal_ Account Type} as short,\n\t\t{Transaction No_} as short,\n\t\t{Debit Amount} as double,\n\t\t{Credit Amount} as double,\n\t\t{Document Date} as string,\n\t\t{External Document No_} as string,\n\t\t{Source Type} as short,\n\t\t{Source No_} as string,\n\t\t{No_ Series} as string,\n\t\t{Tax Area Code} as string,\n\t\t{Tax Liable} as boolean,\n\t\t{Tax Group Code} as string,\n\t\t{Use Tax} as boolean,\n\t\t{VAT Bus_ Posting Group} as string,\n\t\t{VAT Prod_ Posting Group} as string,\n\t\t{Additional-Currency Amount} as double,\n\t\t{Add_-Currency Debit Amount} as double,\n\t\t{Add_-Currency Credit Amount} as double,\n\t\t{Close Income Statement Dim_ ID} as boolean,\n\t\t{IC Partner Code} as string,\n\t\tReversed as boolean,\n\t\t{Reversed by Entry No_} as short,\n\t\t{Reversed Entry No_} as short,\n\t\t{Dimension Set ID} as short,\n\t\t{Prod_ Order No_} as string,\n\t\t{FA Entry Type} as boolean,\n\t\t{FA Entry No_} as boolean,\n\t\t{STE Transaction ID} as string,\n\t\tGST_HST as boolean,\n\t\t{Order No_} as string,\n\t\t{Document Line No_} as boolean,\n\t\t{Check No_} as string,\n\t\t{Voucher Description} as string,\n\t\t{VAT To Ref Contact Type} as boolean,\n\t\t{VAT To Ref Contact Code} as string,\n\t\t{Before Document No_} as string,\n\t\t{VAT-to Direct} as string,\n\t\t{Document No_ Before Post} as string,\n\t\t{Unrealized VAT Entry No_} as boolean,\n\t\t{Document No_ Before Posted} as string,\n\t\t{Voucher Remark 1} as string,\n\t\t{Voucher Remark 2} as string,\n\t\t{Voucher Remark 3} as string,\n\t\t{Voucher Remark 4} as string,\n\t\t{Voucher Remark 5} as string,\n\t\t{Voucher Remark 6} as string,\n\t\t{Voucher Remark 7} as string,\n\t\t{Voucher Remark 8} as string,\n\t\t{Voucher Remark 9} as string,\n\t\t{Voucher Remark 10} as string,\n\t\t{Pay-to_Receive from Direct} as string,\n\t\t{Payment Term Code} as string,\n\t\t{Due Date} as string,\n\t\t{Currency Code} as string,\n\t\t{Currency Factor} as double,\n\t\t{Job task no_} as string,\n\t\t{Is Merge Source Type} as boolean,\n\t\t{Is Merge Bal Account Type} as boolean,\n\t\t{Change From Source Name} as string,\n\t\t{Merged From Bal Account} as string,\n\t\t{Merged from Source Account} as string,\n\t\t{Is Merge GLAccNo} as boolean,\n\t\t{Merge from GLAccNo} as string,\n\t\tlast_update_tmstp as timestamp,\n\t\tsource_system as string\n\t),\n\tformat: 'table',\n\tstore: 'synapseanalytics',\n\tschemaName: 'dbo',\n\ttableName: 'G215OMWest',\n\tinsertable: false,\n\tupdateable: false,\n\tdeletable: false,\n\tupsertable: true,\n\tkeys:($cols),\n\tstaged: true,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError',\n\tmapColumn(\n\t\teach(match(/* All input columns */ true()),\n\t\t\t/* Input name */ $$ = $$)\n\t)) ~> sink1"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/linkedServices/AzureDataLakeStorage1')]",
+				"[concat(variables('workspaceId'), '/linkedServices/AzureSynapseAnalytics1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SQL script 3')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "SET ANSI_NULLS ON\nGO\nSET QUOTED_IDENTIFIER ON\nGO\n\nCREATE TABLE [dbo].[G215OMWest]\n( \n\t[timestamp] [nvarchar](max)  NULL,\n\t[Entry No_] [smallint]  NULL,\n\t[G_L Account No_] [int]  NULL,\n\t[Posting Date] [nvarchar](max)  NULL,\n\t[Document Type] [smallint]  NULL,\n\t[Document No_] [nvarchar](max)  NULL,\n\t[Description] [nvarchar](max)  NULL,\n\t[Bal_ Account No_] [nvarchar](max)  NULL,\n\t[Amount] [float]  NULL,\n\t[Global Dimension 1 Code] [smallint]  NULL,\n\t[Global Dimension 2 Code] [nvarchar](max)  NULL,\n\t[User ID] [nvarchar](max)  NULL,\n\t[Source Code] [nvarchar](max)  NULL,\n\t[System-Created Entry] [bit]  NULL,\n\t[Prior-Year Entry] [bit]  NULL,\n\t[Job No_] [nvarchar](max)  NULL,\n\t[Quantity] [float]  NULL,\n\t[VAT Amount] [float]  NULL,\n\t[Business Unit Code] [nvarchar](max)  NULL,\n\t[Journal Batch Name] [nvarchar](max)  NULL,\n\t[Reason Code] [nvarchar](max)  NULL,\n\t[Gen_ Posting Type] [smallint]  NULL,\n\t[Gen_ Bus_ Posting Group] [nvarchar](max)  NULL,\n\t[Gen_ Prod_ Posting Group] [nvarchar](max)  NULL,\n\t[Bal_ Account Type] [smallint]  NULL,\n\t[Transaction No_] [smallint]  NULL,\n\t[Debit Amount] [float]  NULL,\n\t[Credit Amount] [float]  NULL,\n\t[Document Date] [nvarchar](max)  NULL,\n\t[External Document No_] [nvarchar](max)  NULL,\n\t[Source Type] [smallint]  NULL,\n\t[Source No_] [nvarchar](max)  NULL,\n\t[No_ Series] [nvarchar](max)  NULL,\n\t[Tax Area Code] [nvarchar](max)  NULL,\n\t[Tax Liable] [bit]  NULL,\n\t[Tax Group Code] [nvarchar](max)  NULL,\n\t[Use Tax] [bit]  NULL,\n\t[VAT Bus_ Posting Group] [nvarchar](max)  NULL,\n\t[VAT Prod_ Posting Group] [nvarchar](max)  NULL,\n\t[Additional-Currency Amount] [float]  NULL,\n\t[Add_-Currency Debit Amount] [float]  NULL,\n\t[Add_-Currency Credit Amount] [float]  NULL,\n\t[Close Income Statement Dim_ ID] [bit]  NULL,\n\t[IC Partner Code] [nvarchar](max)  NULL,\n\t[Reversed] [bit]  NULL,\n\t[Reversed by Entry No_] [smallint]  NULL,\n\t[Reversed Entry No_] [smallint]  NULL,\n\t[Dimension Set ID] [smallint]  NULL,\n\t[Prod_ Order No_] [nvarchar](max)  NULL,\n\t[FA Entry Type] [bit]  NULL,\n\t[FA Entry No_] [bit]  NULL,\n\t[STE Transaction ID] [nvarchar](max)  NULL,\n\t[GST_HST] [bit]  NULL,\n\t[Order No_] [nvarchar](max)  NULL,\n\t[Document Line No_] [bit]  NULL,\n\t[Check No_] [nvarchar](max)  NULL,\n\t[Voucher Description] [nvarchar](max)  NULL,\n\t[VAT To Ref Contact Type] [bit]  NULL,\n\t[VAT To Ref Contact Code] [nvarchar](max)  NULL,\n\t[Before Document No_] [nvarchar](max)  NULL,\n\t[VAT-to Direct] [nvarchar](max)  NULL,\n\t[Document No_ Before Post] [nvarchar](max)  NULL,\n\t[Unrealized VAT Entry No_] [bit]  NULL,\n\t[Document No_ Before Posted] [nvarchar](max)  NULL,\n\t[Voucher Remark 1] [nvarchar](max)  NULL,\n\t[Voucher Remark 2] [nvarchar](max)  NULL,\n\t[Voucher Remark 3] [nvarchar](max)  NULL,\n\t[Voucher Remark 4] [nvarchar](max)  NULL,\n\t[Voucher Remark 5] [nvarchar](max)  NULL,\n\t[Voucher Remark 6] [nvarchar](max)  NULL,\n\t[Voucher Remark 7] [nvarchar](max)  NULL,\n\t[Voucher Remark 8] [nvarchar](max)  NULL,\n\t[Voucher Remark 9] [nvarchar](max)  NULL,\n\t[Voucher Remark 10] [nvarchar](max)  NULL,\n\t[Pay-to_Receive from Direct] [nvarchar](max)  NULL,\n\t[Payment Term Code] [nvarchar](max)  NULL,\n\t[Due Date] [nvarchar](max)  NULL,\n\t[Currency Code] [nvarchar](max)  NULL,\n\t[Currency Factor] [float]  NULL,\n\t[Job task no_] [nvarchar](max)  NULL,\n\t[Is Merge Source Type] [bit]  NULL,\n\t[Is Merge Bal Account Type] [bit]  NULL,\n\t[Change From Source Name] [nvarchar](max)  NULL,\n\t[Merged From Bal Account] [nvarchar](max)  NULL,\n\t[Merged from Source Account] [nvarchar](max)  NULL,\n\t[Is Merge GLAccNo] [bit]  NULL,\n\t[Merge from GLAccNo] [nvarchar](max)  NULL,\n\t[last_update_tmstp] [datetime2](7)  NULL,\n\t[source_system] [nvarchar](max)  NULL\n)\nWITH\n(\n\tDISTRIBUTION = ROUND_ROBIN,\n\tHEAP\n)\nGO",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "eth6meqhqnmzpqsmpocws1p1",
+						"poolName": "eth6meqhqnmzpqsmpocws1p1"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SQL Navision - G215 OM West - Incremental Pipeline')]",
+			"type": "Microsoft.Synapse/workspaces/pipelines",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"activities": [
+					{
+						"name": "SQL Navision - G215 OM West - Incremental Pipeline",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "1.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "SQL Navision - G215 OM West - incremental",
+								"type": "DataFlowReference",
+								"parameters": {
+									"cols": [
+										"Entry No_"
+									]
+								},
+								"datasetParameters": {
+									"source1": {},
+									"sink1": {}
+								}
+							},
+							"staging": {
+								"linkedService": {
+									"referenceName": "AzureDataLakeStorage1",
+									"type": "LinkedServiceReference"
+								},
+								"folderPath": "raw"
+							},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "Navision - Pipelines"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]",
+				"[concat(variables('workspaceId'), '/dataflows/SQL Navision - G215 OM West - incremental')]",
+				"[concat(variables('workspaceId'), '/linkedServices/AzureDataLakeStorage1')]"
+			]
 		}
 	]
 }
