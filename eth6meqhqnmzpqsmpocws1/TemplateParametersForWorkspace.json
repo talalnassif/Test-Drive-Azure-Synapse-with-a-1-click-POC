@@ -14,6 +14,9 @@
 		"AzureSQL_connectionString": {
 			"value": ""
 		},
+		"AzureSynapseAnalytics1_connectionString": {
+			"value": ""
+		},
 		"GTS_Live_connectionString": {
 			"value": ""
 		},
