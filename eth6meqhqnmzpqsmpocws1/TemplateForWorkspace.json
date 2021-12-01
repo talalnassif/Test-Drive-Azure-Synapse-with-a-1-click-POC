@@ -5114,6 +5114,9 @@
 			"type": "Microsoft.Synapse/workspaces/dataflows",
 			"apiVersion": "2019-06-01-preview",
 			"properties": {
+				"folder": {
+					"name": "Oracle"
+				},
 				"type": "MappingDataFlow",
 				"typeProperties": {
 					"sources": [
@@ -5152,6 +5155,9 @@
 			"type": "Microsoft.Synapse/workspaces/dataflows",
 			"apiVersion": "2019-06-01-preview",
 			"properties": {
+				"folder": {
+					"name": "Oracle"
+				},
 				"type": "MappingDataFlow",
 				"typeProperties": {
 					"sources": [
