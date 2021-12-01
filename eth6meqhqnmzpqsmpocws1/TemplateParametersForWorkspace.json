@@ -61,6 +61,18 @@
 		},
 		"TumblingTrigger_1h_properties_pipeline_parameters_triggerEndTime": {
 			"value": "@formatDateTime(trigger().outputs.windowEndTime,'yyyy-MM-dd HH:mm:ss.fff')"
+		},
+		"Tumbling Trigger 1H - PPS Canada_properties_pipeline_parameters_triggerStartTime": {
+			"value": "@formatDateTime(trigger().outputs.windowStartTime,'yyyy-MM-dd HH:mm:ss.fff')"
+		},
+		"Tumbling Trigger 1H - PPS Canada_properties_pipeline_parameters_triggerEndTime": {
+			"value": "@formatDateTime(trigger().outputs.windowEndTime,'yyyy-MM-dd HH:mm:ss.fff')"
+		},
+		"Tumbling Trigger - 1h - BV Neatherlands_properties_pipeline_parameters_triggerStartTime": {
+			"value": "@formatDateTime(trigger().outputs.windowStartTime,'yyyy-MM-dd HH:mm:ss.fff')"
+		},
+		"Tumbling Trigger - 1h - BV Neatherlands_properties_pipeline_parameters_triggerEndTime": {
+			"value": "@formatDateTime(trigger().outputs.windowEndTime,'yyyy-MM-dd HH:mm:ss.fff')"
 		}
 	}
 }

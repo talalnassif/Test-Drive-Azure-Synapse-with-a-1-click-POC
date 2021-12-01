@@ -82,6 +82,22 @@
 		"TumblingTrigger_1h_properties_pipeline_parameters_triggerEndTime": {
 			"type": "string",
 			"defaultValue": "@formatDateTime(trigger().outputs.windowEndTime,'yyyy-MM-dd HH:mm:ss.fff')"
+		},
+		"Tumbling Trigger 1H - PPS Canada_properties_pipeline_parameters_triggerStartTime": {
+			"type": "string",
+			"defaultValue": "@formatDateTime(trigger().outputs.windowStartTime,'yyyy-MM-dd HH:mm:ss.fff')"
+		},
+		"Tumbling Trigger 1H - PPS Canada_properties_pipeline_parameters_triggerEndTime": {
+			"type": "string",
+			"defaultValue": "@formatDateTime(trigger().outputs.windowEndTime,'yyyy-MM-dd HH:mm:ss.fff')"
+		},
+		"Tumbling Trigger - 1h - BV Neatherlands_properties_pipeline_parameters_triggerStartTime": {
+			"type": "string",
+			"defaultValue": "@formatDateTime(trigger().outputs.windowStartTime,'yyyy-MM-dd HH:mm:ss.fff')"
+		},
+		"Tumbling Trigger - 1h - BV Neatherlands_properties_pipeline_parameters_triggerEndTime": {
+			"type": "string",
+			"defaultValue": "@formatDateTime(trigger().outputs.windowEndTime,'yyyy-MM-dd HH:mm:ss.fff')"
 		}
 	},
 	"variables": {
@@ -5627,6 +5643,74 @@
 			"apiVersion": "2019-06-01-preview",
 			"properties": {},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/Tumbling Trigger 1H - PPS Canada')]",
+			"type": "Microsoft.Synapse/workspaces/triggers",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipeline": {
+					"pipelineReference": {
+						"referenceName": "Incremental Navision copy pipeline - PPS Canada",
+						"type": "PipelineReference"
+					},
+					"parameters": {
+						"triggerStartTime": "[parameters('Tumbling Trigger 1H - PPS Canada_properties_pipeline_parameters_triggerStartTime')]",
+						"triggerEndTime": "[parameters('Tumbling Trigger 1H - PPS Canada_properties_pipeline_parameters_triggerEndTime')]"
+					}
+				},
+				"type": "TumblingWindowTrigger",
+				"typeProperties": {
+					"frequency": "Hour",
+					"interval": 1,
+					"startTime": "2021-12-01T14:52:00Z",
+					"delay": "00:00:00",
+					"maxConcurrency": 50,
+					"retryPolicy": {
+						"intervalInSeconds": 30
+					},
+					"dependsOn": []
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/pipelines/Incremental Navision copy pipeline - PPS Canada')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/Tumbling Trigger - 1h - BV Neatherlands')]",
+			"type": "Microsoft.Synapse/workspaces/triggers",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipeline": {
+					"pipelineReference": {
+						"referenceName": "Incremental Navision copy pipeline - R858 BV Netherlands",
+						"type": "PipelineReference"
+					},
+					"parameters": {
+						"triggerStartTime": "[parameters('Tumbling Trigger - 1h - BV Neatherlands_properties_pipeline_parameters_triggerStartTime')]",
+						"triggerEndTime": "[parameters('Tumbling Trigger - 1h - BV Neatherlands_properties_pipeline_parameters_triggerEndTime')]"
+					}
+				},
+				"type": "TumblingWindowTrigger",
+				"typeProperties": {
+					"frequency": "Hour",
+					"interval": 1,
+					"startTime": "2021-12-01T14:55:00Z",
+					"delay": "00:00:00",
+					"maxConcurrency": 50,
+					"retryPolicy": {
+						"intervalInSeconds": 30
+					},
+					"dependsOn": []
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/pipelines/Incremental Navision copy pipeline - R858 BV Netherlands')]"
+			]
 		}
 	]
 }
