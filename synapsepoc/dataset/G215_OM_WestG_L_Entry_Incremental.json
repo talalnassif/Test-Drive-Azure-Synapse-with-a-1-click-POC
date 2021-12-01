@@ -20,7 +20,7 @@
 					"type": "Expression"
 				},
 				"folderPath": {
-					"value": "@concat('Navision/Incremental/PPS Canada$G_L Entry/',formatDateTime(dataset().triggerStart,'yyyy/MM/dd'))",
+					"value": "@concat('Navision/Incremental/R858 BV Netherlands$G_L Entry/',formatDateTime(dataset().triggerStart,'yyyy/MM/dd'))",
 					"type": "Expression"
 				},
 				"fileSystem": "raw"
