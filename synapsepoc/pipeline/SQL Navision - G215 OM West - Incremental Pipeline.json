@@ -1,0 +1,47 @@
+{
+	"name": "SQL Navision - G215 OM West - Incremental Pipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "SQL Navision - G215 OM West - Incremental Pipeline",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "1.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "SQL Navision - G215 OM West - incremental",
+						"type": "DataFlowReference",
+						"parameters": {
+							"cols": [
+								"Entry No_"
+							]
+						}
+					},
+					"staging": {
+						"linkedService": {
+							"referenceName": "AzureDataLakeStorage1",
+							"type": "LinkedServiceReference"
+						},
+						"folderPath": "raw"
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			}
+		],
+		"folder": {
+			"name": "Navision - Pipelines"
+		},
+		"annotations": []
+	}
+}
