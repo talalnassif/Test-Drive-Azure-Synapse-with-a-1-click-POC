@@ -1,5 +1,5 @@
 {
-	"name": "Incremental Navision copy pipeline",
+	"name": "Incremental Navision copy pipeline - G215 OM West",
 	"properties": {
 		"activities": [
 			{
@@ -17,7 +17,10 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
-						"sqlReaderQuery": "@concat('DECLARE @begin_time datetime, @end_time datetime, @from_lsn binary(10), @to_lsn binary(10);\nSET @begin_time = ''',pipeline().parameters.triggerStartTime,''';\nSET @end_time = ''',pipeline().parameters.triggerEndTime,''';\nSET @from_lsn = sys.fn_cdc_map_time_to_lsn(''smallest greater than or equal'', @begin_time);\nSET @to_lsn = sys.fn_cdc_map_time_to_lsn(''largest less than'', @end_time);\nSELECT count(1) changecount FROM cdc.[fn_cdc_get_all_changes_dbo_G215 OM West$G_L Entry](@from_lsn, @to_lsn, ''all'')')",
+						"sqlReaderQuery": {
+							"value": "@concat('DECLARE @begin_time datetime, @end_time datetime, @from_lsn binary(10), @to_lsn binary(10);\nSET @begin_time = ''',pipeline().parameters.triggerStartTime,''';\nSET @end_time = ''',pipeline().parameters.triggerEndTime,''';\nSET @from_lsn = sys.fn_cdc_map_time_to_lsn(''smallest greater than or equal'', @begin_time);\nSET @to_lsn = sys.fn_cdc_map_time_to_lsn(''largest less than'', @end_time);\nSELECT count(1) changecount FROM cdc.[fn_cdc_get_all_changes_dbo_G215 OM West$G_L Entry](@from_lsn, @to_lsn, ''all'')')",
+							"type": "Expression"
+						},
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -60,7 +63,10 @@
 							"typeProperties": {
 								"source": {
 									"type": "SqlServerSource",
-									"sqlReaderQuery": "@concat('DECLARE @begin_time datetime, @end_time datetime, @from_lsn binary(10), @to_lsn binary(10);\nSET @begin_time = ''',pipeline().parameters.triggerStartTime,''';\nSET @end_time = ''',pipeline().parameters.triggerEndTime,''';\nSET @from_lsn = sys.fn_cdc_map_time_to_lsn(''smallest greater than or equal'', @begin_time);\nSET @to_lsn = sys.fn_cdc_map_time_to_lsn(''largest less than'', @end_time);\nSELECT * FROM cdc.[fn_cdc_get_all_changes_dbo_G215 OM West$G_L Entry](@from_lsn, @to_lsn, ''all'')')",
+									"sqlReaderQuery": {
+										"value": "@concat('DECLARE @begin_time datetime, @end_time datetime, @from_lsn binary(10), @to_lsn binary(10);\nSET @begin_time = ''',pipeline().parameters.triggerStartTime,''';\nSET @end_time = ''',pipeline().parameters.triggerEndTime,''';\nSET @from_lsn = sys.fn_cdc_map_time_to_lsn(''smallest greater than or equal'', @begin_time);\nSET @to_lsn = sys.fn_cdc_map_time_to_lsn(''largest less than'', @end_time);\nSELECT * FROM cdc.[fn_cdc_get_all_changes_dbo_G215 OM West$G_L Entry](@from_lsn, @to_lsn, ''all'')')",
+										"type": "Expression"
+									},
 									"queryTimeout": "02:00:00",
 									"partitionOption": "None"
 								},
