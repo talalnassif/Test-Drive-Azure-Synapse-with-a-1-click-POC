@@ -1,0 +1,30 @@
+{
+	"name": "Add Period and Fiscal Year",
+	"properties": {
+		"folder": {
+			"name": "SQL"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"linkedService": {
+						"referenceName": "AzureSynapseAnalytics1",
+						"type": "LinkedServiceReference"
+					},
+					"name": "G215OMWestInAzureSynapse"
+				},
+				{
+					"linkedService": {
+						"referenceName": "AzureDataLakeStorage1",
+						"type": "LinkedServiceReference"
+					},
+					"name": "PeriodList"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'table',\n\tstore: 'synapseanalytics',\n\tschemaName: 'dbo',\n\ttableName: 'G215OMWest',\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tstaged: true) ~> G215OMWestInAzureSynapse\nsource(output(\n\t\tYEAR as double,\n\t\tPERIOD as double,\n\t\tDATES as timestamp,\n\t\tHOLIDAY as string,\n\t\tCHECKSUM as string,\n\t\tWEEK_GROUP as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tformat: 'parquet',\n\tfileSystem: 'raw',\n\tfolderPath: 'iFlight',\n\tfileName: 'PERIOD_CONTROL_PERIODS.parquet') ~> PeriodList"
+		}
+	}
+}
