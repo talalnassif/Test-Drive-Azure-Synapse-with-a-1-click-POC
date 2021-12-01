@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Data flow1",
+				"name": "SQL Navision - Pipeline full data load",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
