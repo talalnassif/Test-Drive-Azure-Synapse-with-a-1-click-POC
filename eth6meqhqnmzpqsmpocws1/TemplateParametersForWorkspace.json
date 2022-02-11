@@ -56,10 +56,10 @@
 		"keyVaultLinkedservice_properties_typeProperties_baseUrl": {
 			"value": "@{concat('https://',linkedService().keyVaultName,'.vault.azure.net/')}"
 		},
-		"TumblingTrigger_1h_properties_pipeline_parameters_triggerStartTime": {
+		"Tumbling Trigger - 1h - BV Neatherlands_properties_pipeline_parameters_triggerStartTime": {
 			"value": "@formatDateTime(trigger().outputs.windowStartTime,'yyyy-MM-dd HH:mm:ss.fff')"
 		},
-		"TumblingTrigger_1h_properties_pipeline_parameters_triggerEndTime": {
+		"Tumbling Trigger - 1h - BV Neatherlands_properties_pipeline_parameters_triggerEndTime": {
 			"value": "@formatDateTime(trigger().outputs.windowEndTime,'yyyy-MM-dd HH:mm:ss.fff')"
 		},
 		"Tumbling Trigger 1H - PPS Canada_properties_pipeline_parameters_triggerStartTime": {
@@ -68,10 +68,10 @@
 		"Tumbling Trigger 1H - PPS Canada_properties_pipeline_parameters_triggerEndTime": {
 			"value": "@formatDateTime(trigger().outputs.windowEndTime,'yyyy-MM-dd HH:mm:ss.fff')"
 		},
-		"Tumbling Trigger - 1h - BV Neatherlands_properties_pipeline_parameters_triggerStartTime": {
+		"TumblingTrigger_1h_properties_pipeline_parameters_triggerStartTime": {
 			"value": "@formatDateTime(trigger().outputs.windowStartTime,'yyyy-MM-dd HH:mm:ss.fff')"
 		},
-		"Tumbling Trigger - 1h - BV Neatherlands_properties_pipeline_parameters_triggerEndTime": {
+		"TumblingTrigger_1h_properties_pipeline_parameters_triggerEndTime": {
 			"value": "@formatDateTime(trigger().outputs.windowEndTime,'yyyy-MM-dd HH:mm:ss.fff')"
 		}
 	}
