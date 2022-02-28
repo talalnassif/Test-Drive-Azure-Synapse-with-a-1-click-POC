@@ -1,0 +1,16 @@
+{
+	"name": "SapHana1",
+	"type": "Microsoft.Synapse/workspaces/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "SapHana",
+		"typeProperties": {
+			"connectionString": "servernode=08315a28-7407-4ef3-a9c2-e48bfd9ff2db.hana.prod-eu10.hanacloud.ondemand.com:443;uid=PRESALES#DM;encrypt=true",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI0ODk5ZjM5NC1jYTRhLTQ3NGUtOTQ0ZS1hNzk1NDU4MTdkZDEiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "SelfHostedIntegrationRunTime-USDatacentre",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}
