@@ -1,5 +1,5 @@
 {
-	"name": "Populate Multi Site Data table",
+	"name": "PopulateMultiSiteDatatable",
 	"properties": {
 		"description": "copy data from on Prem to Azure pool",
 		"activities": [
