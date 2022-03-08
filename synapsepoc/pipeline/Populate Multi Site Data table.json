@@ -1,0 +1,50 @@
+{
+	"name": "Populate Multi Site Data table",
+	"properties": {
+		"description": "copy data from on Prem to Azure pool",
+		"activities": [
+			{
+				"name": "On Prem Site data",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "SqlPoolSink",
+						"preCopyScript": "trunc [dbo].[Multi Site Data]",
+						"allowCopyCommand": true
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "SqlServerTable1",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "SqlPoolTable1",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "OneData"
+		},
+		"annotations": []
+	}
+}

@@ -1,0 +1,199 @@
+{
+	"name": "SqlPoolTable1",
+	"properties": {
+		"annotations": [],
+		"type": "SqlPoolTable",
+		"schema": [
+			{
+				"name": "Source",
+				"type": "nvarchar"
+			},
+			{
+				"name": "AccountNo",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Account Name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "JobNo",
+				"type": "nvarchar"
+			},
+			{
+				"name": "TRANSTYPE",
+				"type": "nvarchar"
+			},
+			{
+				"name": "TRANSAMNT",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "TRANSQTY",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "PERIOD",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "FISCAL_YEAR",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "COMMENT_TEXT",
+				"type": "nvarchar"
+			},
+			{
+				"name": "TRANSDATE",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "REFERENCENO",
+				"type": "nvarchar"
+			},
+			{
+				"name": "GD1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "GD2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "GD3",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SUPPLIERNO",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CUSTOMERNO",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ENTITY_CODE",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Currency",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FCCS Entity",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Custom 1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FCCS Account",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FCCS Input Tab",
+				"type": "nvarchar"
+			},
+			{
+				"name": "AccountMappingSource",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Custom 2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "USD Period Rate",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "USD P00",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "USD P01",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "USD P02",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "USD P03",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "USD P04",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "USD P05",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "USD P06",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "USD P07",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "USD P08",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "USD P09",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "USD P10",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "USD P11",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "USD P12",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "NoOfTrans",
+				"type": "float",
+				"precision": 15
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Multi Site Data"
+		},
+		"sqlPool": {
+			"referenceName": "OneData",
+			"type": "SqlPoolReference"
+		}
+	}
+}
