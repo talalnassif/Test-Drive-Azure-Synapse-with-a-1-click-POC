@@ -26,7 +26,14 @@
 						"preCopyScript": "trunc [dbo].[Multi Site Data]",
 						"allowCopyCommand": true
 					},
-					"enableStaging": false
+					"enableStaging": true,
+					"stagingSettings": {
+						"linkedServiceName": {
+							"referenceName": "AzureDataLakeStorage1",
+							"type": "LinkedServiceReference"
+						},
+						"path": "raw/Multi Entity PoC"
+					}
 				},
 				"inputs": [
 					{
