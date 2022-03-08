@@ -23,13 +23,13 @@
 		"OneDataTeamSite_servicePrincipalKey": {
 			"value": ""
 		},
+		"SapHana1_connectionString": {
+			"value": ""
+		},
 		"TripFaresSynapseAnalyticsLinkedService_connectionString": {
 			"value": ""
 		},
 		"USEEGSQLVN_connectionString": {
-			"value": ""
-		},
-		"USEEGSQLVN_password": {
 			"value": ""
 		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
@@ -49,9 +49,6 @@
 		},
 		"TripFaresDataLakeStorageLinkedService_properties_typeProperties_url": {
 			"value": "@{concat('https://',linkedService().datalakeAccountName,'.dfs.core.windows.net')}"
-		},
-		"USEEGSQLVN_properties_typeProperties_userName": {
-			"value": "CRAIG.KENNY.ADMIN@ethosenergygroup.com"
 		},
 		"keyVaultLinkedservice_properties_typeProperties_baseUrl": {
 			"value": "@{concat('https://',linkedService().keyVaultName,'.vault.azure.net/')}"

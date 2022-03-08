@@ -31,6 +31,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'servicePrincipalKey' of 'OneDataTeamSite'"
 		},
+		"SapHana1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'SapHana1'"
+		},
 		"TripFaresSynapseAnalyticsLinkedService_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'TripFaresSynapseAnalyticsLinkedService'"
@@ -38,10 +42,6 @@
 		"USEEGSQLVN_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'USEEGSQLVN'"
-		},
-		"USEEGSQLVN_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'USEEGSQLVN'"
 		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"type": "string",
@@ -66,10 +66,6 @@
 		"TripFaresDataLakeStorageLinkedService_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "@{concat('https://',linkedService().datalakeAccountName,'.dfs.core.windows.net')}"
-		},
-		"USEEGSQLVN_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "CRAIG.KENNY.ADMIN@ethosenergygroup.com"
 		},
 		"keyVaultLinkedservice_properties_typeProperties_baseUrl": {
 			"type": "string",
@@ -104,6 +100,15 @@
 		"workspaceId": "[concat('Microsoft.Synapse/workspaces/', parameters('workspaceName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('workspaceName'), '/OneData')]",
+			"type": "Microsoft.Synapse/workspaces/sqlPools",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"annotations": []
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('workspaceName'), '/Copy from gts Live')]",
 			"type": "Microsoft.Synapse/workspaces/pipelines",
@@ -2540,6 +2545,77 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('workspaceName'), '/PopulateMultiSiteDatatable')]",
+			"type": "Microsoft.Synapse/workspaces/pipelines",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"description": "copy data from on Prem to Azure pool",
+				"activities": [
+					{
+						"name": "On Prem Site data",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlServerSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "SqlPoolSink",
+								"preCopyScript": "trunc [dbo].[Multi Site Data]",
+								"allowCopyCommand": true,
+								"copyCommandSettings": {}
+							},
+							"enableStaging": true,
+							"stagingSettings": {
+								"linkedServiceName": {
+									"referenceName": "AzureDataLakeStorage1",
+									"type": "LinkedServiceReference"
+								},
+								"path": "raw/Multi Entity PoC"
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SqlServerTable1",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SqlPoolTable1",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "OneData"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/datasets/SqlServerTable1')]",
+				"[concat(variables('workspaceId'), '/datasets/SqlPoolTable1')]",
+				"[concat(variables('workspaceId'), '/linkedServices/AzureDataLakeStorage1')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('workspaceName'), '/SQL Navision - G215 OM West - Incremental Pipeline')]",
 			"type": "Microsoft.Synapse/workspaces/pipelines",
 			"apiVersion": "2019-06-01-preview",
@@ -2597,8 +2673,7 @@
 			},
 			"dependsOn": [
 				"[concat(variables('workspaceId'), '/dataflows/SQL Navision - G215 OM West - incremental')]",
-				"[concat(variables('workspaceId'), '/linkedServices/AzureDataLakeStorage1')]",
-				"[concat(variables('workspaceId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]"
+				"[concat(variables('workspaceId'), '/linkedServices/AzureDataLakeStorage1')]"
 			]
 		},
 		{
@@ -4522,6 +4597,414 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('workspaceName'), '/SqlPoolTable1')]",
+			"type": "Microsoft.Synapse/workspaces/datasets",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"annotations": [],
+				"type": "SqlPoolTable",
+				"schema": [
+					{
+						"name": "Source",
+						"type": "nvarchar"
+					},
+					{
+						"name": "AccountNo",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Account Name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "JobNo",
+						"type": "nvarchar"
+					},
+					{
+						"name": "TRANSTYPE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "TRANSAMNT",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "TRANSQTY",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "PERIOD",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "FISCAL_YEAR",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "COMMENT_TEXT",
+						"type": "nvarchar"
+					},
+					{
+						"name": "TRANSDATE",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "REFERENCENO",
+						"type": "nvarchar"
+					},
+					{
+						"name": "GD1",
+						"type": "nvarchar"
+					},
+					{
+						"name": "GD2",
+						"type": "nvarchar"
+					},
+					{
+						"name": "GD3",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SUPPLIERNO",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CUSTOMERNO",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ENTITY_CODE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Currency",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FCCS Entity",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Custom 1",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FCCS Account",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FCCS Input Tab",
+						"type": "nvarchar"
+					},
+					{
+						"name": "AccountMappingSource",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Custom 2",
+						"type": "nvarchar"
+					},
+					{
+						"name": "USD Period Rate",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "USD P00",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "USD P01",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "USD P02",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "USD P03",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "USD P04",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "USD P05",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "USD P06",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "USD P07",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "USD P08",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "USD P09",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "USD P10",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "USD P11",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "USD P12",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "NoOfTrans",
+						"type": "float",
+						"precision": 15
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "Multi Site Data"
+				},
+				"sqlPool": {
+					"referenceName": "OneData",
+					"type": "SqlPoolReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/sqlPools/OneData')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SqlServerTable1')]",
+			"type": "Microsoft.Synapse/workspaces/datasets",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "USEEGSQLVN",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
+					{
+						"name": "Source",
+						"type": "nvarchar"
+					},
+					{
+						"name": "AccountNo",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Account Name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "JobNo",
+						"type": "nvarchar"
+					},
+					{
+						"name": "TRANSTYPE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "TRANSAMNT",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "TRANSQTY",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "PERIOD",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "FISCAL_YEAR",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "COMMENT_TEXT",
+						"type": "nvarchar"
+					},
+					{
+						"name": "TRANSDATE",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "REFERENCENO",
+						"type": "nvarchar"
+					},
+					{
+						"name": "GD1",
+						"type": "nvarchar"
+					},
+					{
+						"name": "GD2",
+						"type": "nvarchar"
+					},
+					{
+						"name": "GD3",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SUPPLIERNO",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CUSTOMERNO",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ENTITY_CODE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Currency",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FCCS Entity",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Custom 1",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FCCS Account",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FCCS Input Tab",
+						"type": "nvarchar"
+					},
+					{
+						"name": "AccountMappingSource",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Custom 2",
+						"type": "nvarchar"
+					},
+					{
+						"name": "USD Period Rate",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "USD P00",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "USD P01",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "USD P02",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "USD P03",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "USD P04",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "USD P05",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "USD P06",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "USD P07",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "USD P08",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "USD P09",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "USD P10",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "USD P11",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "USD P12",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "NoOfTrans",
+						"type": "float",
+						"precision": 15
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "Multi Site Data"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/linkedServices/USEEGSQLVN')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('workspaceName'), '/azureSynapseAnalyticsSchema')]",
 			"type": "Microsoft.Synapse/workspaces/datasets",
 			"apiVersion": "2019-06-01-preview",
@@ -5098,6 +5581,25 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('workspaceName'), '/SapHana1')]",
+			"type": "Microsoft.Synapse/workspaces/linkedServices",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"annotations": [],
+				"type": "SapHana",
+				"typeProperties": {
+					"connectionString": "[parameters('SapHana1_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "SelfHostedIntegrationRunTime-USDatacentre",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/integrationRuntimes/SelfHostedIntegrationRunTime-USDatacentre')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('workspaceName'), '/TripFaresDataLakeStorageLinkedService')]",
 			"type": "Microsoft.Synapse/workspaces/linkedServices",
 			"apiVersion": "2019-06-01-preview",
@@ -5195,12 +5697,7 @@
 				"annotations": [],
 				"type": "SqlServer",
 				"typeProperties": {
-					"connectionString": "[parameters('USEEGSQLVN_connectionString')]",
-					"userName": "[parameters('USEEGSQLVN_properties_typeProperties_userName')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('USEEGSQLVN_password')]"
-					}
+					"connectionString": "[parameters('USEEGSQLVN_connectionString')]"
 				},
 				"connectVia": {
 					"referenceName": "SelfHostedIntegrationRunTime-USDatacentre",
@@ -6051,6 +6548,18 @@
 		},
 		{
 			"name": "[concat(parameters('workspaceName'), '/eth6meqhqnmzpqsmpocws1p1')]",
+			"type": "Microsoft.Synapse/workspaces/sqlPools",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"collation": "SQL_Latin1_General_CP1_CI_AS",
+				"maxSizeBytes": 263882790666240,
+				"annotations": []
+			},
+			"dependsOn": [],
+			"location": "southcentralus"
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/OneData')]",
 			"type": "Microsoft.Synapse/workspaces/sqlPools",
 			"apiVersion": "2019-06-01-preview",
 			"properties": {
