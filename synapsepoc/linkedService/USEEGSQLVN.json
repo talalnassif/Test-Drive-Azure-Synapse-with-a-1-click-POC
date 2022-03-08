@@ -5,9 +5,8 @@
 		"annotations": [],
 		"type": "SqlServer",
 		"typeProperties": {
-			"connectionString": "integrated security=True;data source=USEEGSQLVN;initial catalog=PPS_LIVE",
-			"userName": "CRAIG.KENNY.ADMIN@ethosenergygroup.com",
-			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI3MjI2YjIyMi1kNjNjLTQyNmMtYmI3YS00M2JlZmUwNzEwMzciLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+			"connectionString": "integrated security=False;data source=USEEGSQLVN;initial catalog=OneEthosData;user id=OneData",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJjNjQ1MTk1Ni0xNjBhLTQwOWMtODI3NS1jYzljZmE3ZWZkMzMiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
 		},
 		"connectVia": {
 			"referenceName": "SelfHostedIntegrationRunTime-USDatacentre",
