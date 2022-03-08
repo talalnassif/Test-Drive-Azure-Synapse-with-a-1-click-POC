@@ -32,7 +32,7 @@
 							"referenceName": "AzureDataLakeStorage1",
 							"type": "LinkedServiceReference"
 						},
-						"path": "raw/Multi Entity PoC"
+						"path": "raw/OneDataCopy"
 					}
 				},
 				"inputs": [
