@@ -23,7 +23,7 @@
 					},
 					"sink": {
 						"type": "SqlPoolSink",
-						"preCopyScript": "trunc [Multi Site Data]",
+						"preCopyScript": "TRUNCATE TABLE dbo.[Multi Site Data]",
 						"allowCopyCommand": true
 					},
 					"enableStaging": true,
