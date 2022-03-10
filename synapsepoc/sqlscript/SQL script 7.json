@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 7",
+	"properties": {
+		"content": {
+			"query": "CREATE TABLE [dbo].[Table]\n(\n    FCCS_Entity NVARCHAR(50),\n    FCCS_Company_name NVARCHAR(200),\n    SBU_L1 NVARCHAR(100),\n    SBU_L2 NVARCHAR(100),\n    SBU_L3 NVARCHAR(100),\n    Hemisphere NVARCHAR(50),\n    Board NVARCHAR(50)\n)\n\nGO\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "OneData",
+				"poolName": "OneData"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
