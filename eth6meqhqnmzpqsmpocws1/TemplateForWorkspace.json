@@ -2706,6 +2706,139 @@
 								"parameters": {}
 							}
 						]
+					},
+					{
+						"name": "Copy Entity List",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Copy FCCS Account",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "ExcelSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								}
+							},
+							"sink": {
+								"type": "SqlPoolSink",
+								"preCopyScript": "TRUNCATE TABLE dbo.[Entity_list_tbl]",
+								"allowCopyCommand": true,
+								"copyCommandSettings": {}
+							},
+							"enableStaging": true,
+							"stagingSettings": {
+								"linkedServiceName": {
+									"referenceName": "AzureDataLakeStorage1",
+									"type": "LinkedServiceReference"
+								},
+								"path": "raw/OneDataCopy"
+							},
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "FCCS Entity",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FCCS_Entity",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "FCCS Company Name",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FCCS_Company_name",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "SBU L1",
+											"type": "String"
+										},
+										"sink": {
+											"name": "SBU_L1",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "SBU L2",
+											"type": "String"
+										},
+										"sink": {
+											"name": "SBU_L2",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "SBU L3",
+											"type": "String"
+										},
+										"sink": {
+											"name": "SBU_L3",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Hemisphere",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Hemisphere",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Board",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Board",
+											"type": "String"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Entity_List_Excel",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Entity_List_tbl",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
 					}
 				],
 				"policy": {
@@ -2720,6 +2853,8 @@
 			"dependsOn": [
 				"[concat(variables('workspaceId'), '/datasets/FCCS_Acounts_Excel')]",
 				"[concat(variables('workspaceId'), '/datasets/FCCS_Account_tbl')]",
+				"[concat(variables('workspaceId'), '/datasets/Entity_List_Excel')]",
+				"[concat(variables('workspaceId'), '/datasets/Entity_List_tbl')]",
 				"[concat(variables('workspaceId'), '/linkedServices/AzureDataLakeStorage1')]"
 			]
 		},
@@ -3900,6 +4035,83 @@
 			},
 			"dependsOn": [
 				"[concat(variables('workspaceId'), '/linkedServices/AzureDataLakeStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/Entity_List_Excel')]",
+			"type": "Microsoft.Synapse/workspaces/datasets",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "Entity List",
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "Structure for power BI revised with Entitys.xlsx",
+						"folderPath": "Multi Entity PoC",
+						"fileSystem": "raw"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/linkedServices/AzureDataLakeStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/Entity_List_tbl')]",
+			"type": "Microsoft.Synapse/workspaces/datasets",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"annotations": [],
+				"type": "SqlPoolTable",
+				"schema": [
+					{
+						"name": "FCCS_Entity",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FCCS_Company_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SBU_L1",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SBU_L2",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SBU_L3",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Hemisphere",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Board",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "Entity_List_tbl"
+				},
+				"sqlPool": {
+					"referenceName": "OneData",
+					"type": "SqlPoolReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/sqlPools/OneData')]"
 			]
 		},
 		{
@@ -6559,6 +6771,66 @@
 			"properties": {
 				"content": {
 					"query": "CREATE TABLE [dbo].[FCCS_Account_tbl]\n(\n    type VARCHAR(10) NOT NULL,\n    category VARCHAR(50) NOT NULL,\n    category_2 VARCHAR(50) NOT NULL,\n    category_3 VARCHAR(50) NOT NULL,\n    fccs_account VARCHAR(10) NOT NULL,\n    type_seq INT NOT NULL,\n    category_seq INT NOT NULL,\n    category_seq_2 INT NOT NULL,\n    category_seq_3 INT NOT NULL,\n    sign INT NOT NULL,\n    descripton VARCHAR(200) NOT NULL\n)\n\nGO\n",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "OneData",
+						"poolName": "OneData"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SQL script 6')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "SELECT TOP (100) [type]\n,[category]\n,[category_2]\n,[category_3]\n,[fccs_account]\n,[type_seq]\n,[category_seq]\n,[category_seq_2]\n,[category_seq_3]\n,[sign]\n,[descripton]\n FROM [dbo].[FCCS_Account_tbl]",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "OneData",
+						"poolName": "OneData"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SQL script 7')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "CREATE TABLE [dbo].[Entity_List_tbl]\n(\n    FCCS_Entity NVARCHAR(50),\n    FCCS_Company_name NVARCHAR(200),\n    SBU_L1 NVARCHAR(100),\n    SBU_L2 NVARCHAR(100),\n    SBU_L3 NVARCHAR(100),\n    Hemisphere NVARCHAR(50),\n    Board NVARCHAR(50)\n)\n\nGO\n",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "OneData",
+						"poolName": "OneData"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SQL script 8')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "DROP TABLE [dbo].[Table]\nGO\n\n",
 					"metadata": {
 						"language": "sql"
 					},
