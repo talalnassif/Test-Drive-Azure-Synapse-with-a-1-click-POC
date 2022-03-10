@@ -2566,8 +2566,7 @@
 								"type": "SqlPoolSink",
 								"preCopyScript": "TRUNCATE TABLE dbo.[FCCS_Account_tbl]",
 								"allowCopyCommand": true,
-								"copyCommandSettings": {},
-								"tableOption": "autoCreate"
+								"copyCommandSettings": {}
 							},
 							"enableStaging": true,
 							"stagingSettings": {
@@ -2576,6 +2575,121 @@
 									"type": "LinkedServiceReference"
 								},
 								"path": "raw/OneDataCopy"
+							},
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Type",
+											"type": "String"
+										},
+										"sink": {
+											"name": "type",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Category",
+											"type": "String"
+										},
+										"sink": {
+											"name": "category",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Category 2",
+											"type": "String"
+										},
+										"sink": {
+											"name": "category_2",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Category 3",
+											"type": "String"
+										},
+										"sink": {
+											"name": "category_3",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "FCCS Account",
+											"type": "String"
+										},
+										"sink": {
+											"name": "fccs_account",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Type Seq",
+											"type": "String"
+										},
+										"sink": {
+											"name": "type_seq",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "Category Seq",
+											"type": "String"
+										},
+										"sink": {
+											"name": "category_seq",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "Category 2  Seq",
+											"type": "String"
+										},
+										"sink": {
+											"name": "category_seq_2",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "Category 3  Seq",
+											"type": "String"
+										},
+										"sink": {
+											"name": "category_seq_3",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "Sign",
+											"type": "String"
+										},
+										"sink": {
+											"name": "sign",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "Description From FCCS",
+											"type": "String"
+										},
+										"sink": {
+											"name": "descripton",
+											"type": "String"
+										}
+									}
+								]
 							}
 						},
 						"inputs": [
@@ -3818,7 +3932,57 @@
 			"properties": {
 				"annotations": [],
 				"type": "SqlPoolTable",
-				"schema": [],
+				"schema": [
+					{
+						"name": "type",
+						"type": "varchar"
+					},
+					{
+						"name": "category",
+						"type": "varchar"
+					},
+					{
+						"name": "category_2",
+						"type": "varchar"
+					},
+					{
+						"name": "category_3",
+						"type": "varchar"
+					},
+					{
+						"name": "fccs_account",
+						"type": "varchar"
+					},
+					{
+						"name": "type_seq",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "category_seq",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "category_seq_2",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "category_seq_3",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "sign",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "descripton",
+						"type": "varchar"
+					}
+				],
 				"typeProperties": {
 					"schema": "dbo",
 					"table": "FCCS_Account_tbl"
@@ -6375,6 +6539,26 @@
 			"properties": {
 				"content": {
 					"query": "TRUNCATE TABLE dbo.[Multi Site Data]",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "OneData",
+						"poolName": "OneData"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SQL script 5')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "CREATE TABLE [dbo].[FCCS_Account_tbl]\n(\n    type VARCHAR(10) NOT NULL,\n    category VARCHAR(50) NOT NULL,\n    category_2 VARCHAR(50) NOT NULL,\n    category_3 VARCHAR(50) NOT NULL,\n    fccs_account VARCHAR(10) NOT NULL,\n    type_seq INT NOT NULL,\n    category_seq INT NOT NULL,\n    category_seq_2 INT NOT NULL,\n    category_seq_3 INT NOT NULL,\n    sign INT NOT NULL,\n    descripton VARCHAR(200) NOT NULL\n)\n\nGO\n",
 					"metadata": {
 						"language": "sql"
 					},
