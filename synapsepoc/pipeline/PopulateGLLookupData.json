@@ -185,8 +185,108 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"enableStaging": false
-				}
+					"source": {
+						"type": "ExcelSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						}
+					},
+					"sink": {
+						"type": "SqlPoolSink",
+						"preCopyScript": "TRUNCATE TABLE dbo.[Entity_list_tbl]",
+						"allowCopyCommand": true
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "FCCS Entity",
+									"type": "String"
+								},
+								"sink": {
+									"name": "FCCS_Entity",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "FCCS Company Name",
+									"type": "String"
+								},
+								"sink": {
+									"name": "FCCS_Company_name",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SBU L1",
+									"type": "String"
+								},
+								"sink": {
+									"name": "SBU_L1",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SBU L2",
+									"type": "String"
+								},
+								"sink": {
+									"name": "SBU_L2",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SBU L3",
+									"type": "String"
+								},
+								"sink": {
+									"name": "SBU_L3",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Hemisphere",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Hemisphere",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Board",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Board",
+									"type": "String"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Entity_List_Excel",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Entity_List_tbl",
+						"type": "DatasetReference"
+					}
+				]
 			}
 		],
 		"folder": {
