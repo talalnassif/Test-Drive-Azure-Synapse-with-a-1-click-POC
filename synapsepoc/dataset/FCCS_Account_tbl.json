@@ -3,7 +3,57 @@
 	"properties": {
 		"annotations": [],
 		"type": "SqlPoolTable",
-		"schema": [],
+		"schema": [
+			{
+				"name": "type",
+				"type": "varchar"
+			},
+			{
+				"name": "category",
+				"type": "varchar"
+			},
+			{
+				"name": "category_2",
+				"type": "varchar"
+			},
+			{
+				"name": "category_3",
+				"type": "varchar"
+			},
+			{
+				"name": "fccs_account",
+				"type": "varchar"
+			},
+			{
+				"name": "type_seq",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "category_seq",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "category_seq_2",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "category_seq_3",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "sign",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "descripton",
+				"type": "varchar"
+			}
+		],
 		"typeProperties": {
 			"schema": "dbo",
 			"table": "FCCS_Account_tbl"
