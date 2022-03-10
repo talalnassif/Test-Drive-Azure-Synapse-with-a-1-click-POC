@@ -1,0 +1,22 @@
+{
+	"name": "Entity_List_Excel",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Entity List",
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "Structure for power BI revised with Entitys.xlsx",
+				"folderPath": "Multi Entity PoC",
+				"fileSystem": "raw"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": []
+	}
+}
