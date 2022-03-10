@@ -1,0 +1,67 @@
+{
+	"name": "FCCS_Acounts_Excel",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "FCCS Accounts",
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "Structure for power BI revised with Entitys.xlsx",
+				"folderPath": "Multi Entity PoC",
+				"fileSystem": "raw"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "Type",
+				"type": "String"
+			},
+			{
+				"name": "Category",
+				"type": "String"
+			},
+			{
+				"name": "Category 2",
+				"type": "String"
+			},
+			{
+				"name": "Category 3",
+				"type": "String"
+			},
+			{
+				"name": "FCCS Account",
+				"type": "String"
+			},
+			{
+				"name": "Type Seq",
+				"type": "String"
+			},
+			{
+				"name": "Category Seq",
+				"type": "String"
+			},
+			{
+				"name": "Category 2  Seq",
+				"type": "String"
+			},
+			{
+				"name": "Category 3  Seq",
+				"type": "String"
+			},
+			{
+				"name": "Sign",
+				"type": "String"
+			},
+			{
+				"name": "Description From FCCS",
+				"type": "String"
+			}
+		]
+	}
+}
