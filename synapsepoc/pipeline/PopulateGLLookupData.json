@@ -26,8 +26,7 @@
 					"sink": {
 						"type": "SqlPoolSink",
 						"preCopyScript": "TRUNCATE TABLE dbo.[FCCS_Account_tbl]",
-						"allowCopyCommand": true,
-						"tableOption": "autoCreate"
+						"allowCopyCommand": true
 					},
 					"enableStaging": true,
 					"stagingSettings": {
@@ -36,6 +35,121 @@
 							"type": "LinkedServiceReference"
 						},
 						"path": "raw/OneDataCopy"
+					},
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "Type",
+									"type": "String"
+								},
+								"sink": {
+									"name": "type",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Category",
+									"type": "String"
+								},
+								"sink": {
+									"name": "category",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Category 2",
+									"type": "String"
+								},
+								"sink": {
+									"name": "category_2",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Category 3",
+									"type": "String"
+								},
+								"sink": {
+									"name": "category_3",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "FCCS Account",
+									"type": "String"
+								},
+								"sink": {
+									"name": "fccs_account",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Type Seq",
+									"type": "String"
+								},
+								"sink": {
+									"name": "type_seq",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "Category Seq",
+									"type": "String"
+								},
+								"sink": {
+									"name": "category_seq",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "Category 2  Seq",
+									"type": "String"
+								},
+								"sink": {
+									"name": "category_seq_2",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "Category 3  Seq",
+									"type": "String"
+								},
+								"sink": {
+									"name": "category_seq_3",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "Sign",
+									"type": "String"
+								},
+								"sink": {
+									"name": "sign",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "Description From FCCS",
+									"type": "String"
+								},
+								"sink": {
+									"name": "descripton",
+									"type": "String"
+								}
+							}
+						]
 					}
 				},
 				"inputs": [

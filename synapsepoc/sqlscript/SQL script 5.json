@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 5",
+	"properties": {
+		"content": {
+			"query": "CREATE TABLE [dbo].[FCCS_Account_tbl]\n(\n    type VARCHAR(10) NOT NULL,\n    category VARCHAR(50) NOT NULL,\n    category_2 VARCHAR(50) NOT NULL,\n    category_3 VARCHAR(50) NOT NULL,\n    fccs_account VARCHAR(10) NOT NULL,\n    type_seq INT NOT NULL,\n    category_seq INT NOT NULL,\n    category_seq_2 INT NOT NULL,\n    category_seq_3 INT NOT NULL,\n    sign INT NOT NULL,\n    descripton VARCHAR(200) NOT NULL\n)\n\nGO\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "OneData",
+				"poolName": "OneData"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
