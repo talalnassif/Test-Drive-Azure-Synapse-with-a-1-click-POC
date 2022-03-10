@@ -29,7 +29,7 @@
 						"allowCopyCommand": true,
 						"tableOption": "autoCreate"
 					},
-					"enableStaging": false
+					"enableStaging": true
 				},
 				"inputs": [
 					{
