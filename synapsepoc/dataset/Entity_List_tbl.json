@@ -1,0 +1,45 @@
+{
+	"name": "Entity_List_tbl",
+	"properties": {
+		"annotations": [],
+		"type": "SqlPoolTable",
+		"schema": [
+			{
+				"name": "FCCS_Entity",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FCCS_Company_name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SBU_L1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SBU_L2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SBU_L3",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Hemisphere",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Board",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Entity_List_tbl"
+		},
+		"sqlPool": {
+			"referenceName": "OneData",
+			"type": "SqlPoolReference"
+		}
+	}
+}
