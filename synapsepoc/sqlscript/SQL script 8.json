@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 8",
+	"properties": {
+		"content": {
+			"query": "DROP TABLE [dbo].[Table]\nGO\n\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "OneData",
+				"poolName": "OneData"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

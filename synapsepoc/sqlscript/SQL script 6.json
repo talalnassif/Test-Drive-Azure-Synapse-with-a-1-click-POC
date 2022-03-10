@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 6",
+	"properties": {
+		"content": {
+			"query": "SELECT TOP (100) [type]\n,[category]\n,[category_2]\n,[category_3]\n,[fccs_account]\n,[type_seq]\n,[category_seq]\n,[category_seq_2]\n,[category_seq_3]\n,[sign]\n,[descripton]\n FROM [dbo].[FCCS_Account_tbl]",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "OneData",
+				"poolName": "OneData"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
