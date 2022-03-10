@@ -198,7 +198,7 @@
 						"preCopyScript": "TRUNCATE TABLE dbo.[Entity_list_tbl]",
 						"allowCopyCommand": true
 					},
-					"enableStaging": false,
+					"enableStaging": true,
 					"translator": {
 						"type": "TabularTranslator",
 						"mappings": [
