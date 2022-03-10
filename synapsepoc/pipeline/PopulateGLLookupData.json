@@ -23,11 +23,23 @@
 							"enablePartitionDiscovery": false
 						}
 					},
+					"sink": {
+						"type": "SqlPoolSink",
+						"preCopyScript": "TRUNCATE TABLE dbo.[FCCS_Account_tbl]",
+						"allowCopyCommand": true,
+						"tableOption": "autoCreate"
+					},
 					"enableStaging": false
 				},
 				"inputs": [
 					{
 						"referenceName": "FCCS_Acounts_Excel",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "FCCS_Account_tbl",
 						"type": "DatasetReference"
 					}
 				]

@@ -1,0 +1,16 @@
+{
+	"name": "FCCS_Account_tbl",
+	"properties": {
+		"annotations": [],
+		"type": "SqlPoolTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "FCCS_Account_tbl"
+		},
+		"sqlPool": {
+			"referenceName": "OneData",
+			"type": "SqlPoolReference"
+		}
+	}
+}
