@@ -199,6 +199,13 @@
 						"allowCopyCommand": true
 					},
 					"enableStaging": true,
+					"stagingSettings": {
+						"linkedServiceName": {
+							"referenceName": "AzureDataLakeStorage1",
+							"type": "LinkedServiceReference"
+						},
+						"path": "raw/OneDataCopy"
+					},
 					"translator": {
 						"type": "TabularTranslator",
 						"mappings": [
