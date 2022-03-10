@@ -29,7 +29,14 @@
 						"allowCopyCommand": true,
 						"tableOption": "autoCreate"
 					},
-					"enableStaging": true
+					"enableStaging": true,
+					"stagingSettings": {
+						"linkedServiceName": {
+							"referenceName": "AzureDataLakeStorage1",
+							"type": "LinkedServiceReference"
+						},
+						"path": "raw/OneDataCopy"
+					}
 				},
 				"inputs": [
 					{
