@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 15",
+	"properties": {
+		"content": {
+			"query": "CREATE VIEW [dbo].[Multi_Site_Data_View]\n\tAS SELECT\n [Source]\n,[Multi Site Data].[AccountNo]\n,[Multi Site Data].[Account Name]\n,[Multi Site Data].[JobNo]\n,[Multi Site Data].[TRANSTYPE]\n,[Multi Site Data].[TRANSAMNT]\n,[Multi Site Data].[TRANSQTY]\n,[Multi Site Data].[PERIOD]\n,[Multi Site Data].[FISCAL_YEAR]\n,[Multi Site Data].[COMMENT_TEXT]\n,[Multi Site Data].[TRANSDATE]\n,[Multi Site Data].[REFERENCENO]\n,[Multi Site Data].[GD1]\n,[Multi Site Data].[GD2]\n,[Multi Site Data].[GD3]\n,[Multi Site Data].[SUPPLIERNO]\n,[Multi Site Data].[CUSTOMERNO]\n,[Multi Site Data].[ENTITY_CODE]\n,[Multi Site Data].[Currency]\n,[Multi Site Data].[FCCS Entity]\n,[Multi Site Data].[Custom 1]\n,[Multi Site Data].[FCCS Account]\n,[Multi Site Data].[FCCS Input Tab]\n,[Multi Site Data].[AccountMappingSource]\n,[Multi Site Data].[Custom 2]\n,[Multi Site Data].[USD Period Rate]\n,[Multi Site Data].[USD P00]\n,[Multi Site Data].[USD P01]\n,[Multi Site Data].[USD P02]\n,[Multi Site Data].[USD P03]\n,[Multi Site Data].[USD P04]\n,[Multi Site Data].[USD P05]\n,[Multi Site Data].[USD P06]\n,[Multi Site Data].[USD P07]\n,[Multi Site Data].[USD P08]\n,[Multi Site Data].[USD P09]\n,[Multi Site Data].[USD P10]\n,[Multi Site Data].[USD P11]\n,[Multi Site Data].[USD P12]\n,[Multi Site Data].[NoOfTrans]\n,[FCCS_Account_tbl].[type]\n,[FCCS_Account_tbl].[category]\n,[FCCS_Account_tbl].[category_2]\n,[FCCS_Account_tbl].[category_3]\n,[FCCS_Account_tbl].[fccs_account]\n,[FCCS_Account_tbl].[type_seq]\n,[FCCS_Account_tbl].[category_seq]\n,[FCCS_Account_tbl].[category_seq_2]\n,[FCCS_Account_tbl].[category_seq_3]\n,[FCCS_Account_tbl].[sign]\n,[FCCS_Account_tbl].[descripton]\n,[Entity_List_tbl].[FCCS_Entity]\n,[Entity_List_tbl].[FCCS_Company_name]\n,[Entity_List_tbl].[SBU_L1]\n,[Entity_List_tbl].[SBU_L2]\n,[Entity_List_tbl].[SBU_L3]\n,[Entity_List_tbl].[Hemisphere]\n,[Entity_List_tbl].[Board]\n FROM [dbo].[Multi Site Data]\n left outer join [dbo].[Entity_List_tbl] on ([Multi Site Data].[FCCS Entity] = [Entity_List_tbl].[FCCS_Entity])\n left outer join [dbo].[FCCS_Account_tbl] on ([Multi Site Data].[FCCS Account] = [FCCS_Account_tbl].[fccs_account])\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "OneData",
+				"poolName": "OneData"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

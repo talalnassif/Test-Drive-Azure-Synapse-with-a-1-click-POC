@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 10",
+	"properties": {
+		"content": {
+			"query": "SET ANSI_NULLS ON\nGO\nSET QUOTED_IDENTIFIER ON\nGO\n\nCREATE TABLE [dbo].[FCCS_Account_tbl]\n( \n\t[type] [varchar](10)  NOT NULL,\n\t[category] [varchar](50)  NOT NULL,\n\t[category_2] [varchar](50)  NOT NULL,\n\t[category_3] [varchar](50)  NOT NULL,\n\t[fccs_account] [varchar](10)  NOT NULL,\n\t[type_seq] [int]  NOT NULL,\n\t[category_seq] [int]  NOT NULL,\n\t[category_seq_2] [int]  NOT NULL,\n\t[category_seq_3] [int]  NOT NULL,\n\t[sign] [int]  NOT NULL,\n\t[descripton] [varchar](200)  NOT NULL\n)\nWITH\n(\n\tDISTRIBUTION = ROUND_ROBIN,\n\tCLUSTERED COLUMNSTORE INDEX\n)\nGO",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "OneData",
+				"poolName": "OneData"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

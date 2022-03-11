@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 11",
+	"properties": {
+		"content": {
+			"query": "SELECT TOP (100) [Entity_List_tbl].[FCCS_Entity]\n,[Entity_List_tbl].[FCCS_Company_name]\n,[Entity_List_tbl].[SBU_L1]\n,[Entity_List_tbl].[SBU_L2]\n,[Entity_List_tbl].[SBU_L3]\n,[Entity_List_tbl].[Hemisphere]\n,[Entity_List_tbl].[Board]\n FROM [dbo].[Entity_List_tbl]\n ",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "OneData",
+				"poolName": "OneData"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

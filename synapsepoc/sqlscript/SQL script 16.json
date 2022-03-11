@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 16",
+	"properties": {
+		"content": {
+			"query": "DROP VIEW [dbo].[View]\nGO\n\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "OneData",
+				"poolName": "OneData"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

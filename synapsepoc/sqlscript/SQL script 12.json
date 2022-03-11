@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 12",
+	"properties": {
+		"content": {
+			"query": "SELECT TOP (100) [FCCS_Account_tbl].[type]\n,[FCCS_Account_tbl].[category]\n,[FCCS_Account_tbl].[category_2]\n,[FCCS_Account_tbl].[category_3]\n,[FCCS_Account_tbl].[fccs_account]\n,[FCCS_Account_tbl].[type_seq]\n,[FCCS_Account_tbl].[category_seq]\n,[FCCS_Account_tbl].[category_seq_2]\n,[FCCS_Account_tbl].[category_seq_3]\n,[FCCS_Account_tbl].[sign]\n,[FCCS_Account_tbl].[descripton]\n FROM [dbo].[FCCS_Account_tbl]",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "OneData",
+				"poolName": "OneData"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
