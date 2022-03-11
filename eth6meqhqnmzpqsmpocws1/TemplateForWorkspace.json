@@ -7210,6 +7210,166 @@
 			"apiVersion": "2019-06-01-preview",
 			"properties": {},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SQL script 9')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "SET ANSI_NULLS ON\nGO\nSET QUOTED_IDENTIFIER ON\nGO\n\nCREATE TABLE [dbo].[Entity_List_tbl]\n( \n\t[FCCS_Entity] [nvarchar](50)  NULL,\n\t[FCCS_Company_name] [nvarchar](200)  NULL,\n\t[SBU_L1] [nvarchar](100)  NULL,\n\t[SBU_L2] [nvarchar](100)  NULL,\n\t[SBU_L3] [nvarchar](100)  NULL,\n\t[Hemisphere] [nvarchar](50)  NULL,\n\t[Board] [nvarchar](50)  NULL\n)\nWITH\n(\n\tDISTRIBUTION = ROUND_ROBIN,\n\tCLUSTERED COLUMNSTORE INDEX\n)\nGO",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "OneData",
+						"poolName": "OneData"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SQL script 10')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "SET ANSI_NULLS ON\nGO\nSET QUOTED_IDENTIFIER ON\nGO\n\nCREATE TABLE [dbo].[FCCS_Account_tbl]\n( \n\t[type] [varchar](10)  NOT NULL,\n\t[category] [varchar](50)  NOT NULL,\n\t[category_2] [varchar](50)  NOT NULL,\n\t[category_3] [varchar](50)  NOT NULL,\n\t[fccs_account] [varchar](10)  NOT NULL,\n\t[type_seq] [int]  NOT NULL,\n\t[category_seq] [int]  NOT NULL,\n\t[category_seq_2] [int]  NOT NULL,\n\t[category_seq_3] [int]  NOT NULL,\n\t[sign] [int]  NOT NULL,\n\t[descripton] [varchar](200)  NOT NULL\n)\nWITH\n(\n\tDISTRIBUTION = ROUND_ROBIN,\n\tCLUSTERED COLUMNSTORE INDEX\n)\nGO",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "OneData",
+						"poolName": "OneData"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SQL script 11')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "SELECT TOP (100) [Entity_List_tbl].[FCCS_Entity]\n,[Entity_List_tbl].[FCCS_Company_name]\n,[Entity_List_tbl].[SBU_L1]\n,[Entity_List_tbl].[SBU_L2]\n,[Entity_List_tbl].[SBU_L3]\n,[Entity_List_tbl].[Hemisphere]\n,[Entity_List_tbl].[Board]\n FROM [dbo].[Entity_List_tbl]\n ",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "OneData",
+						"poolName": "OneData"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SQL script 12')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "SELECT TOP (100) [FCCS_Account_tbl].[type]\n,[FCCS_Account_tbl].[category]\n,[FCCS_Account_tbl].[category_2]\n,[FCCS_Account_tbl].[category_3]\n,[FCCS_Account_tbl].[fccs_account]\n,[FCCS_Account_tbl].[type_seq]\n,[FCCS_Account_tbl].[category_seq]\n,[FCCS_Account_tbl].[category_seq_2]\n,[FCCS_Account_tbl].[category_seq_3]\n,[FCCS_Account_tbl].[sign]\n,[FCCS_Account_tbl].[descripton]\n FROM [dbo].[FCCS_Account_tbl]",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "OneData",
+						"poolName": "OneData"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SQL script 13')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "SELECT TOP (100) [Source]\n,[Multi Site Data].[AccountNo]\n,[Multi Site Data].[Account Name]\n,[Multi Site Data].[JobNo]\n,[Multi Site Data].[TRANSTYPE]\n,[Multi Site Data].[TRANSAMNT]\n,[Multi Site Data].[TRANSQTY]\n,[Multi Site Data].[PERIOD]\n,[Multi Site Data].[FISCAL_YEAR]\n,[Multi Site Data].[COMMENT_TEXT]\n,[Multi Site Data].[TRANSDATE]\n,[Multi Site Data].[REFERENCENO]\n,[Multi Site Data].[GD1]\n,[Multi Site Data].[GD2]\n,[Multi Site Data].[GD3]\n,[Multi Site Data].[SUPPLIERNO]\n,[Multi Site Data].[CUSTOMERNO]\n,[Multi Site Data].[ENTITY_CODE]\n,[Multi Site Data].[Currency]\n,[Multi Site Data].[FCCS Entity]\n,[Multi Site Data].[Custom 1]\n,[Multi Site Data].[FCCS Account]\n,[Multi Site Data].[FCCS Input Tab]\n,[Multi Site Data].[AccountMappingSource]\n,[Multi Site Data].[Custom 2]\n,[Multi Site Data].[USD Period Rate]\n,[Multi Site Data].[USD P00]\n,[Multi Site Data].[USD P01]\n,[Multi Site Data].[USD P02]\n,[Multi Site Data].[USD P03]\n,[Multi Site Data].[USD P04]\n,[Multi Site Data].[USD P05]\n,[Multi Site Data].[USD P06]\n,[Multi Site Data].[USD P07]\n,[Multi Site Data].[USD P08]\n,[Multi Site Data].[USD P09]\n,[Multi Site Data].[USD P10]\n,[Multi Site Data].[USD P11]\n,[Multi Site Data].[USD P12]\n,[Multi Site Data].[NoOfTrans]\n FROM [dbo].[Multi Site Data]",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "OneData",
+						"poolName": "OneData"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SQL script 14')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "SELECT\nTOP (100) [Source]\n,[Multi Site Data].[AccountNo]\n,[Multi Site Data].[Account Name]\n,[Multi Site Data].[JobNo]\n,[Multi Site Data].[TRANSTYPE]\n,[Multi Site Data].[TRANSAMNT]\n,[Multi Site Data].[TRANSQTY]\n,[Multi Site Data].[PERIOD]\n,[Multi Site Data].[FISCAL_YEAR]\n,[Multi Site Data].[COMMENT_TEXT]\n,[Multi Site Data].[TRANSDATE]\n,[Multi Site Data].[REFERENCENO]\n,[Multi Site Data].[GD1]\n,[Multi Site Data].[GD2]\n,[Multi Site Data].[GD3]\n,[Multi Site Data].[SUPPLIERNO]\n,[Multi Site Data].[CUSTOMERNO]\n,[Multi Site Data].[ENTITY_CODE]\n,[Multi Site Data].[Currency]\n,[Multi Site Data].[FCCS Entity]\n,[Multi Site Data].[Custom 1]\n,[Multi Site Data].[FCCS Account]\n,[Multi Site Data].[FCCS Input Tab]\n,[Multi Site Data].[AccountMappingSource]\n,[Multi Site Data].[Custom 2]\n,[Multi Site Data].[USD Period Rate]\n,[Multi Site Data].[USD P00]\n,[Multi Site Data].[USD P01]\n,[Multi Site Data].[USD P02]\n,[Multi Site Data].[USD P03]\n,[Multi Site Data].[USD P04]\n,[Multi Site Data].[USD P05]\n,[Multi Site Data].[USD P06]\n,[Multi Site Data].[USD P07]\n,[Multi Site Data].[USD P08]\n,[Multi Site Data].[USD P09]\n,[Multi Site Data].[USD P10]\n,[Multi Site Data].[USD P11]\n,[Multi Site Data].[USD P12]\n,[Multi Site Data].[NoOfTrans]\n,[FCCS_Account_tbl].[type]\n,[FCCS_Account_tbl].[category]\n,[FCCS_Account_tbl].[category_2]\n,[FCCS_Account_tbl].[category_3]\n,[FCCS_Account_tbl].[fccs_account]\n,[FCCS_Account_tbl].[type_seq]\n,[FCCS_Account_tbl].[category_seq]\n,[FCCS_Account_tbl].[category_seq_2]\n,[FCCS_Account_tbl].[category_seq_3]\n,[FCCS_Account_tbl].[sign]\n,[FCCS_Account_tbl].[descripton]\n,[Entity_List_tbl].[FCCS_Entity]\n,[Entity_List_tbl].[FCCS_Company_name]\n,[Entity_List_tbl].[SBU_L1]\n,[Entity_List_tbl].[SBU_L2]\n,[Entity_List_tbl].[SBU_L3]\n,[Entity_List_tbl].[Hemisphere]\n,[Entity_List_tbl].[Board]\n FROM [dbo].[Multi Site Data]\n left outer join [dbo].[Entity_List_tbl] on ([Multi Site Data].[FCCS Entity] = [Entity_List_tbl].[FCCS_Entity])\n left outer join [dbo].[FCCS_Account_tbl] on ([Multi Site Data].[FCCS Account] = [FCCS_Account_tbl].[fccs_account])",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "OneData",
+						"poolName": "OneData"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SQL script 15')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "CREATE VIEW [dbo].[Multi_Site_Data_View]\n\tAS SELECT\n [Source]\n,[Multi Site Data].[AccountNo]\n,[Multi Site Data].[Account Name]\n,[Multi Site Data].[JobNo]\n,[Multi Site Data].[TRANSTYPE]\n,[Multi Site Data].[TRANSAMNT]\n,[Multi Site Data].[TRANSQTY]\n,[Multi Site Data].[PERIOD]\n,[Multi Site Data].[FISCAL_YEAR]\n,[Multi Site Data].[COMMENT_TEXT]\n,[Multi Site Data].[TRANSDATE]\n,[Multi Site Data].[REFERENCENO]\n,[Multi Site Data].[GD1]\n,[Multi Site Data].[GD2]\n,[Multi Site Data].[GD3]\n,[Multi Site Data].[SUPPLIERNO]\n,[Multi Site Data].[CUSTOMERNO]\n,[Multi Site Data].[ENTITY_CODE]\n,[Multi Site Data].[Currency]\n,[Multi Site Data].[FCCS Entity]\n,[Multi Site Data].[Custom 1]\n,[Multi Site Data].[FCCS Account]\n,[Multi Site Data].[FCCS Input Tab]\n,[Multi Site Data].[AccountMappingSource]\n,[Multi Site Data].[Custom 2]\n,[Multi Site Data].[USD Period Rate]\n,[Multi Site Data].[USD P00]\n,[Multi Site Data].[USD P01]\n,[Multi Site Data].[USD P02]\n,[Multi Site Data].[USD P03]\n,[Multi Site Data].[USD P04]\n,[Multi Site Data].[USD P05]\n,[Multi Site Data].[USD P06]\n,[Multi Site Data].[USD P07]\n,[Multi Site Data].[USD P08]\n,[Multi Site Data].[USD P09]\n,[Multi Site Data].[USD P10]\n,[Multi Site Data].[USD P11]\n,[Multi Site Data].[USD P12]\n,[Multi Site Data].[NoOfTrans]\n,[FCCS_Account_tbl].[type]\n,[FCCS_Account_tbl].[category]\n,[FCCS_Account_tbl].[category_2]\n,[FCCS_Account_tbl].[category_3]\n,[FCCS_Account_tbl].[fccs_account]\n,[FCCS_Account_tbl].[type_seq]\n,[FCCS_Account_tbl].[category_seq]\n,[FCCS_Account_tbl].[category_seq_2]\n,[FCCS_Account_tbl].[category_seq_3]\n,[FCCS_Account_tbl].[sign]\n,[FCCS_Account_tbl].[descripton]\n,[Entity_List_tbl].[FCCS_Entity]\n,[Entity_List_tbl].[FCCS_Company_name]\n,[Entity_List_tbl].[SBU_L1]\n,[Entity_List_tbl].[SBU_L2]\n,[Entity_List_tbl].[SBU_L3]\n,[Entity_List_tbl].[Hemisphere]\n,[Entity_List_tbl].[Board]\n FROM [dbo].[Multi Site Data]\n left outer join [dbo].[Entity_List_tbl] on ([Multi Site Data].[FCCS Entity] = [Entity_List_tbl].[FCCS_Entity])\n left outer join [dbo].[FCCS_Account_tbl] on ([Multi Site Data].[FCCS Account] = [FCCS_Account_tbl].[fccs_account])\n",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "OneData",
+						"poolName": "OneData"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SQL script 16')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "DROP VIEW [dbo].[View]\nGO\n\n",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "OneData",
+						"poolName": "OneData"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
 		}
 	]
 }
