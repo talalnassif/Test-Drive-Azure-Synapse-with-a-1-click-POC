@@ -6,8 +6,8 @@
 		"annotations": [],
 		"type": "SapHana",
 		"typeProperties": {
-			"connectionString": "servernode=c15632c8-9a84-44f9-ab29-c7912d0559cc.hana.prod-eu10.hanacloud.ondemand.com:443;uid=AZUREUSER;encrypt=true",
-			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiIxMGEyYzNjNy1mMTBlLTQ1MzgtOGY3Ni0yZWNhNWUxOWExY2MiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+			"connectionString": "servernode=c15632c8-9a84-44f9-ab29-c7912d0559cc.hana.prod-eu10.hanacloud.ondemand.com:443;uid=DWCDBUSER#AZUREUSER;encrypt=true",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI4ZmQwZjY5My01ZDMzLTQxNDItYjg1MS0wMjM0YTNiMWEyZjQiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
 		},
 		"connectVia": {
 			"referenceName": "SelfHostedIntegrationRunTime-USDatacentre",
