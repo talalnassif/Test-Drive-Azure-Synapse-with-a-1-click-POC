@@ -1,0 +1,35 @@
+{
+	"name": "Pipeline 1",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SapHanaSource",
+						"query": "SELECT count(*) FROM TEST.ZC_ONEDATAGLACC\nWHERE LEDGER = '0L'\nand TO_DATE(LASTMODIFIED,'YYYYMMDDhh24miss') \nbetween TO_DATE('20201214080358 ','YYYYMMDDhh24miss') and TO_DATE('20221214080358 ','YYYYMMDDhh24miss')",
+						"partitionOption": "None"
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "SapHanaTable1",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}
