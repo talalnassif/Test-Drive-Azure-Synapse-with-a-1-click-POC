@@ -1,0 +1,16 @@
+{
+	"name": "SapHanaTable1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SapHana2PRODETHOS",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SapHanaTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "TEST",
+			"table": "ZC_ONEDATAGLACC"
+		}
+	}
+}
