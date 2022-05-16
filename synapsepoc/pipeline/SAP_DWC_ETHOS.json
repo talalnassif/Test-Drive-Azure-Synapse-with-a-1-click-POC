@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SapHanaSource",
-						"query": "SELECT count(*) FROM TEST.ZC_ONEDATAGLACC\nWHERE LEDGER = '0L'\nand TO_DATE(LASTMODIFIED,'YYYYMMDDhh24miss') \nbetween TO_DATE('20201214080358 ','YYYYMMDDhh24miss') and TO_DATE('20221214080358 ','YYYYMMDDhh24miss')",
+						"query": "SELECT *\nFROM TEST.\"View_1_prod\"\nWHERE LEDGER = '0L'\nand TO_DATE(LASTMODIFIED,'YYYYMMDDhh24miss') \nbetween TO_DATE('20220514080358 ','YYYYMMDDhh24miss') and TO_DATE('20220516080358','YYYYMMDDhh24miss')",
 						"partitionOption": "None"
 					},
 					"enableStaging": false
