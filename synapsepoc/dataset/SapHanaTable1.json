@@ -10,7 +10,7 @@
 		"schema": [],
 		"typeProperties": {
 			"schema": "TEST",
-			"table": "ZC_ONEDATAGLACC"
+			"table": "View_1_prod"
 		}
 	}
 }
