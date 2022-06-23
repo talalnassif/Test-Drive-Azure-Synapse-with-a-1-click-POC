@@ -5,7 +5,14 @@
 			{
 				"name": "Copy data1",
 				"type": "Copy",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "GetNowUTC",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -19,8 +26,15 @@
 						"type": "DelimitedTextSource",
 						"storeSettings": {
 							"type": "SftpReadSettings",
-							"recursive": true,
-							"modifiedDatetimeStart": "2022-06-23T00:00:00.824Z",
+							"recursive": false,
+							"modifiedDatetimeStart": {
+								"value": "@variables('WaterMarkUTC')",
+								"type": "Expression"
+							},
+							"modifiedDatetimeEnd": {
+								"value": "@variables('sftpUTCNow')",
+								"type": "Expression"
+							},
 							"wildcardFileName": "*.csv",
 							"enablePartitionDiscovery": false,
 							"disableChunking": false
@@ -52,8 +66,49 @@
 						"type": "DatasetReference"
 					}
 				]
+			},
+			{
+				"name": "GetNowUTC",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Set Dummy WaterMark",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "sftpUTCNow",
+					"value": {
+						"value": "@utcnow()",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Set Dummy WaterMark",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "WaterMarkUTC",
+					"value": {
+						"value": "@adddays(utcnow(),-3)",
+						"type": "Expression"
+					}
+				}
 			}
 		],
+		"variables": {
+			"sftpUTCNow": {
+				"type": "String"
+			},
+			"WaterMarkUTC": {
+				"type": "String"
+			}
+		},
 		"annotations": []
 	}
 }
