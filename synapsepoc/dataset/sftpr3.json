@@ -12,8 +12,9 @@
 				"type": "SftpLocation",
 				"folderPath": "/gp1work/ZFI_GL_GLOBAL"
 			},
-			"columnDelimiter": ",",
+			"columnDelimiter": ";",
 			"escapeChar": "\\",
+			"firstRowAsHeader": true,
 			"quoteChar": "\""
 		},
 		"schema": []
