@@ -99,6 +99,47 @@
 						"type": "Expression"
 					}
 				}
+			},
+			{
+				"name": "Delete old files",
+				"type": "Delete",
+				"dependsOn": [
+					{
+						"activity": "Copy data1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "sftpr3",
+						"type": "DatasetReference"
+					},
+					"enableLogging": false,
+					"storeSettings": {
+						"type": "SftpReadSettings",
+						"recursive": false,
+						"modifiedDatetimeStart": {
+							"value": "@variables('WaterMarkUTC')",
+							"type": "Expression"
+						},
+						"modifiedDatetimeEnd": {
+							"value": "@variables('sftpUTCNow')",
+							"type": "Expression"
+						},
+						"enablePartitionDiscovery": false,
+						"disableChunking": false
+					}
+				}
 			}
 		],
 		"variables": {
