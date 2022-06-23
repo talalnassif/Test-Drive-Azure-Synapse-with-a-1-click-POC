@@ -19,8 +19,6 @@
 						"type": "DelimitedTextSource",
 						"storeSettings": {
 							"type": "SftpReadSettings",
-							"recursive": true,
-							"modifiedDatetimeStart": "2022-06-23T00:00:00.824Z",
 							"enablePartitionDiscovery": false,
 							"disableChunking": false
 						},
