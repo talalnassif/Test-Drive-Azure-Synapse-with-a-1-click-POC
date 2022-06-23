@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "SftpLocation",
-				"folderPath": "/gp1work/ZFI_GL_GLOBAL"
+				"folderPath": "/gp1work/ZFI_GL_EXTR_GLOBAL"
 			},
 			"columnDelimiter": ";",
 			"escapeChar": "\\",
